@@ -11,3 +11,4 @@ class MyApp extends StatelessWidget {
     throw UnimplementedError();
   }
 }
+//git config --global user.name "Your Name"
