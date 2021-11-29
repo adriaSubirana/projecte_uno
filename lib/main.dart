@@ -19,28 +19,27 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text("Uno"),
-          ),
-          body: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .doc("/Partidas/5k9aj8mcVC6X5FOldq8o")
-                .snapshots(),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
-            ) {
-              if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              final doc = snapshot.data!;
-              final data = doc.data();
+        appBar: AppBar(
+          title: const Text("Uno"),
+        ),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .doc("/Partidas/5k9aj8mcVC6X5FOldq8o")
+              .snapshots(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
+          ) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final doc = snapshot.data!;
+            final data = doc.data();
 
-              return Center(child: Text("${data?['turno']}"));
-            },
-          )),
+            return Center(child: Text("${data?['turno']}"));
+          },
+        ),
+      ),
     );
   }
 }
-
-//git config --global user.name "Your Name"
