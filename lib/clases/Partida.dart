@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'jugador.dart';
+import 'dart:math';
 
 class Partida {
   List<Jugador> jugadores = [];
@@ -164,5 +165,10 @@ class Partida {
     } else {
       turno++;
     }
+  }
+
+  void shuffleTurno() {
+    var rand = Random();
+    turno = rand.nextInt(jugadores.length);
   }
 }
