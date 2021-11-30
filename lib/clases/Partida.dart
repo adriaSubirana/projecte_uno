@@ -171,4 +171,14 @@ class Partida {
     var rand = Random();
     turno = rand.nextInt(jugadores.length);
   }
+
+  void repartir() {
+    for (int i = 0; i < jugadores.length; i++) {
+      List<String> baraja = [];
+      for (int j = 0; j < 7; j++) {
+        baraja.add(robar());
+      }
+      jugadores[i].setCartas(baraja);
+    }
+  }
 }

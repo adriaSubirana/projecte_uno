@@ -1,25 +1,33 @@
 // ignore_for_file: file_names
 
+import 'partida.dart';
+
 class Jugador {
   late String nombre;
   bool uno = false;
   late bool host;
   List<String> cartas = [];
-  Jugador(this.nombre, this.uno, this.host);
-}
-
-/*
-  //repartir
-  void repartir(List<String> baraja, List<Jugador> jugadores){
-    for(int i = 0, ){
-    if(jugadores[i].host == true){
-      
-    }} 
+  Jugador(this.nombre, this.host);
+  Jugador.copia(Jugador j1) {
+    nombre = j1.getNombre();
+    host = j1.gethost();
+    uno = j1.getUno();
+    cartas = j1.getCartas();
   }
 
+  String getNombre() => nombre;
+  bool getUno() => uno;
+  bool gethost() => host;
+  List<String> getCartas() => cartas;
 
-//hacer el getters
-//hacer los setters (cambiar el valor)
-//función añadir carta a la lista de cartas del jugador
-cartas.add //función:añadir la carta robada a la lista de jugador
-*/
+  void setNombre(String nombre) => this.nombre = nombre;
+  void setUno(bool uno) => this.uno = uno;
+  void setCartas(List<String> cartas) => this.cartas = cartas;
+
+  void addCarta(String cartaRobada) {
+    cartas.add(cartaRobada);
+  }
+}
+
+//var j1 = Jugador("Juan", false);
+//var j2 = Jugador.copia(j1);
