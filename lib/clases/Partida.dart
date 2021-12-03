@@ -144,11 +144,9 @@ class Partida {
 
   void addCartaMesa(String c) => cartasMesa.add(c);
 
-  String robar() {
-    String carta;
-    carta = cartasRobar[0];
+  void robar(int i) {
+    jugadores[i].addCarta(cartasRobar[0]);
     cartasRobar.removeAt(0);
-    return carta;
   }
 
   void renovar() {
@@ -174,11 +172,9 @@ class Partida {
 
   void repartir() {
     for (int i = 0; i < jugadores.length; i++) {
-      List<String> baraja = [];
       for (int j = 0; j < 7; j++) {
-        baraja.add(robar());
+        robar(i);
       }
-      jugadores[i].setCartas(baraja);
     }
   }
 }
