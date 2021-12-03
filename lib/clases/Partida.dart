@@ -10,7 +10,7 @@ class Partida {
   late int turno;
 
   Partida(Jugador j) {
-    //jugadores.add(j);
+    jugadores.add(j);
     cartasMesa = [];
     cartasRobar = [
       "b0",
@@ -139,8 +139,8 @@ class Partida {
   int getTurno() => turno;
   int setTurno(int i) => turno = i;
 
-  //void addJugador(Jugador j) jugadores.add(j);
-  //void eliminarJugador(int i) jugadores.removeAt(i);
+  void addJugador(Jugador j) => jugadores.add(j);
+  void eliminarJugador(int i) => jugadores.removeAt(i);
 
   void addCartaMesa(String c) => cartasMesa.add(c);
 
