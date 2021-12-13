@@ -1,14 +1,17 @@
 // ignore_for_file: file_names, sized_box_for_whitespace, prefer_const_constructors, unused_import, must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
+import 'package:projecte_uno/clases/Partida.dart';
+
+late String cartamesaActualizada;
 
 class CartaMesa extends StatelessWidget {
-  late String carta;
+  late List<String> carta;
+  late String ultcarta = carta.last;
 
   CartaMesa({
     Key? key,
-    this.carta = 'b8',
+    required this.carta,
   }) : super(key: key);
 
   @override
@@ -18,7 +21,7 @@ class CartaMesa extends StatelessWidget {
       height: 300,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('$carta.png'),
+          image: AssetImage('$ultcarta.png'),
           fit: BoxFit.contain,
         ),
       ),
