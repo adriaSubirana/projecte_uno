@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Uno"),
+          toolbarHeight: 0,
         ),
         body: Column(
           children: [
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                     child: Center(child: Text("${data?['turno']}")));
               },
             ),*/
-            PantallaJuego(),
+            Expanded(child: PantallaJuego()),
           ],
         ),
       ),
