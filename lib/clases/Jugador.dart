@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'partida.dart';
-
 class Jugador {
   late String nombre;
   bool uno = false;

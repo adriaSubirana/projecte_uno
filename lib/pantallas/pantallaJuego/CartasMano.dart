@@ -1,18 +1,18 @@
-// ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/build_carta.dart';
 
-class StackedCards extends StatefulWidget {
+class CartasMano extends StatefulWidget {
   late final List<String> cartas;
 
-  StackedCards({Key? key, required this.cartas}) : super(key: key);
+  CartasMano({Key? key, required this.cartas}) : super(key: key);
 
   @override
-  _StackedCardsState createState() => _StackedCardsState();
+  _CartasManoState createState() => _CartasManoState();
 }
 
-class _StackedCardsState extends State<StackedCards> {
+class _CartasManoState extends State<CartasMano> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
