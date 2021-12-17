@@ -11,14 +11,14 @@ import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
   final mano = ["b0", "y4", "r8", "g7", "g9", "r3", "b2", "k%", "y5", "y4"];
-  final mesa = ["b1", "y5", "r9", "g8", "g0", "r4", "b3"];
+  final mesa = ["b1", "y5", "r9", "g8", "g0", "r4", "k3"];
 
   PantallaJuego({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black87,
+      color: Colors.black.withAlpha(170),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
