@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/build_carta.dart';
 
 late String cartamesaActualizada;
 
@@ -16,13 +17,6 @@ class CartaMesa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('$ultcarta.png'),
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
+    return Carta(codigo: ultcarta);
   }
 }

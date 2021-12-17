@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'jugador.dart';
+import 'Jugador.dart';
 import 'dart:math';
 
 class Partida {
@@ -10,6 +10,7 @@ class Partida {
   late int turno;
 
   Partida(Jugador j) {
+    // Pasar Host
     jugadores.add(j);
     cartasMesa = [];
     cartasRobar = [

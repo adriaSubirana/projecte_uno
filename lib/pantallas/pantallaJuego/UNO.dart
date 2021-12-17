@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:projecte_uno/clases/jugador.dart';
+import 'package:projecte_uno/clases/Jugador.dart';
 
 class UNO extends StatefulWidget {
   late Jugador j1;

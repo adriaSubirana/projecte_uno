@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Partida.dart';
-import 'package:projecte_uno/clases/jugador.dart';
+import 'package:projecte_uno/clases/Jugador.dart';
 
 class Robar extends StatefulWidget {
   late Jugador j1;
