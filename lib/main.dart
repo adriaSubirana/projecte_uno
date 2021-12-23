@@ -5,7 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
-import 'package:projecte_uno/pantallas/juego.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/juego.dart';
+import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +31,10 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 0,
         ),
-        body: Column(
+        body: Login(),
+        /*body: Column(
           children: [
-            /*StreamBuilder(
+            StreamBuilder(
               stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
               builder: (
                 BuildContext context,
@@ -48,10 +50,10 @@ class MyApp extends StatelessWidget {
                 return Expanded(
                     child: Center(child: Text("${data?['turno']}")));
               },
-            ),*/
+            ),
             Expanded(child: PantallaJuego()),
           ],
-        ),
+        ),*/
       ),
     );
   }
