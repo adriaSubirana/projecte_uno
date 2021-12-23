@@ -27,12 +27,15 @@ class PantallaJuego extends StatelessWidget {
             child: Abandonar(),
             alignment: Alignment.topLeft,
           ),
-          barrajugador(jugadores: [
-            Jugador("pepe", true),
-            Jugador("lisa", false),
-            Jugador("jamito", false),
-            Jugador("bea", false),
-          ]),
+          barrajugador(
+            jugadores: [
+              Jugador("pepe", true),
+              Jugador("lisa", false),
+              Jugador("jamito", false),
+              Jugador("bea", false),
+            ],
+            turno: 2,
+          ),
           Expanded(
             flex: 8,
             child: Padding(
