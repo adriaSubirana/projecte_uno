@@ -3,6 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:projecte_uno/clases/Jugador.dart';
+import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/juego.dart';
 
 void main() async {
@@ -10,6 +12,9 @@ void main() async {
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
+
+var host = Jugador("host", true);
+var partida = Partida();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -28,9 +33,7 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             /*StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .doc("/Partidas/5k9aj8mcVC6X5FOldq8o")
-                  .snapshots(),
+              stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
               builder: (
                 BuildContext context,
                 AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
