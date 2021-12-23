@@ -2,12 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
+import 'package:projecte_uno/clases/Partida.dart';
 
 class barrajugador extends StatelessWidget {
   final List<Jugador> jugadores;
+  final int turno;
   const barrajugador({
     Key? key,
     required this.jugadores,
+    required this.turno,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -20,9 +23,23 @@ class barrajugador extends StatelessWidget {
           children: [
             for (int i = 0; i < jugadores.length; i++)
               Container(
+                width: 55,
+                height: 75,
                 child: showuser(
                     numcartas: jugadores[i].cartas.length,
                     nombre: jugadores[i].nombre),
+                decoration: i == turno
+                    ? BoxDecoration(
+                        color: Colors.grey[800],
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                            BoxShadow(
+                              color: Colors.lime,
+                              spreadRadius: 7,
+                              blurRadius: 7,
+                            )
+                          ])
+                    : null,
               )
           ],
         ),
@@ -46,30 +63,34 @@ class showuser extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Icon(Icons.person, color: Colors.black, size: 50),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 3, 3, 0),
+              child: Icon(Icons.person,
+                  color: Colors.white.withAlpha(200), size: 55),
+            ),
             Container(
-              width: 50,
-              height: 50,
+              width: 55,
+              height: 55,
               alignment: Alignment.topRight,
-              child: Container(
-                  width: 15,
-                  height: 15,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-                  child: Center(
-                      child: Text("$numcartas",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12)))),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 2, 2, 0),
+                child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.red),
+                    child: Center(
+                        child: Text("$numcartas",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12)))),
+              ),
             ),
           ],
         ),
         Text("$nombre",
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 11)),
+            style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
       ],
     );
   }
