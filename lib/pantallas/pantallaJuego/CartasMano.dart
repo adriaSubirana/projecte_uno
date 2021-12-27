@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/build_carta.dart';
 
 class CartasMano extends StatefulWidget {
-  late final List<String> cartas;
+  final List<String> cartas;
+  final void Function(String) onPressed; // una funció: void f()
 
-  CartasMano({Key? key, required this.cartas}) : super(key: key);
+  const CartasMano({
+    Key? key,
+    required this.cartas,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   _CartasManoState createState() => _CartasManoState();
@@ -21,7 +26,10 @@ class _CartasManoState extends State<CartasMano> {
         return Align(
           alignment: Alignment.topLeft,
           widthFactor: 0.45,
-          child: Carta(codigo: widget.cartas[index]),
+          child: Carta(
+            codigo: widget.cartas[index],
+            onPressed: widget.onPressed,
+          ),
         );
       },
       itemCount: widget.cartas.length,

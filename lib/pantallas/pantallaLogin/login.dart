@@ -28,13 +28,13 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  void _crear_pulsado() {
+  void _crearPulsado() {
     setState(() {
       _crear = !_crear;
     });
   }
 
-  void _unirse_pulsado() {
+  void _unirsePulsado() {
     setState(() {
       _unirse = !_unirse;
     });
@@ -81,10 +81,12 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // TODO: Cambiar por ElevatedButton
                   FloatingActionButton.extended(
                     splashColor: Colors.yellow,
                     onPressed: () {
-                      _crear_pulsado();
+                      // TODO: Soy el host, llamar a PantallaJugadores con host = true, nombre
+                      _crearPulsado();
                     },
                     label: const Text(
                       "Crear",
@@ -101,21 +103,23 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold),
                     ),
                     backgroundColor: Colors.red[900],
-                    extendedPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
+                    extendedPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   const Padding(
-                      padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                  )),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
+                  ),
+                  // TODO: Cambiar por ElevatedButton
                   FloatingActionButton.extended(
                     splashColor: Colors.yellow,
                     onPressed: () {
-                      _unirse_pulsado();
+                      // TODO: No soy el host, llamar a PantallaJugadores con host = false, nombre
+                      _unirsePulsado();
                     },
                     label: const Text(
                       "Unirse",

@@ -13,6 +13,7 @@ class barrajugador extends StatelessWidget {
     required this.turno,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
@@ -25,20 +26,19 @@ class barrajugador extends StatelessWidget {
               Container(
                 width: 55,
                 height: 75,
-                child: showuser(
-                    numcartas: jugadores[i].cartas.length,
-                    nombre: jugadores[i].nombre),
+                child: showuser(numcartas: jugadores[i].cartas.length, nombre: jugadores[i].nombre),
                 decoration: i == turno
                     ? BoxDecoration(
                         color: Colors.grey[800],
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                            BoxShadow(
-                              color: Colors.lime,
-                              spreadRadius: 7,
-                              blurRadius: 7,
-                            )
-                          ])
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.lime,
+                            spreadRadius: 7,
+                            blurRadius: 7,
+                          )
+                        ],
+                      )
                     : null,
               )
           ],
@@ -65,8 +65,7 @@ class showuser extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 3, 3, 0),
-              child: Icon(Icons.person,
-                  color: Colors.white.withAlpha(200), size: 55),
+              child: Icon(Icons.person, color: Colors.white.withAlpha(200), size: 55),
             ),
             Container(
               width: 55,
@@ -77,20 +76,16 @@ class showuser extends StatelessWidget {
                 child: Container(
                     width: 15,
                     height: 15,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                     child: Center(
                         child: Text("$numcartas",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12)))),
+                                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)))),
               ),
             ),
           ],
         ),
-        Text("$nombre",
-            style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
+        Text(nombre, style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
       ],
     );
   }

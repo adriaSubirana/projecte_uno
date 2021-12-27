@@ -3,9 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projecte_uno/clases/uno.dart';
 
-import 'Jugador.dart';
-import 'dart:math';
-
 class Partida {
   late List<String> cartasMesa, cartasRobar;
   late bool enCurso;
@@ -26,12 +23,8 @@ class Partida {
         enCurso = data['enCurso'],
         turno = data['turno'];
 
-  Map<String, dynamic> toFirestore() => {
-        'cartasMesa': cartasMesa,
-        'cartasRobar': cartasRobar,
-        'enCurso': enCurso,
-        'turno': turno
-      };
+  Map<String, dynamic> toFirestore() =>
+      {'cartasMesa': cartasMesa, 'cartasRobar': cartasRobar, 'enCurso': enCurso, 'turno': turno};
 }
 
 Stream<DocumentSnapshot<Partida>> partidaSnapshots(String id) {
@@ -45,10 +38,7 @@ Stream<DocumentSnapshot<Partida>> partidaSnapshots(String id) {
       .snapshots();
 }
 
-void addJugador(String idPartida, Jugador j) {
-  final db = FirebaseFirestore.instance;
-  //db.collection("/Partidas/$idPartida/Jugadores").add(j.toFirestore());
-}
+
 
 
   // void eliminarJugador(int i) => jugadores.removeAt(i);

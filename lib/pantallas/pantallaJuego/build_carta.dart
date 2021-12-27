@@ -10,14 +10,19 @@ const Map<String, Color> cardColor = {
 
 class Carta extends StatelessWidget {
   final String codigo;
+  final void Function(String)? onPressed; // una funció: void f()
 
-  const Carta({Key? key, required this.codigo}) : super(key: key);
+  const Carta({
+    Key? key,
+    required this.codigo,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        debugPrint(codigo);
+        if (onPressed != null) onPressed!(codigo);
       },
       child: AspectRatio(
         aspectRatio: 2.5 / 3.5,
@@ -44,8 +49,7 @@ class Carta extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 24),
+                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                           child: Text(
                             codigo[1],
                             style: const TextStyle(
@@ -71,8 +75,7 @@ class Carta extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: RotationTransition(
-                                    turns:
-                                        const AlwaysStoppedAnimation(-45 / 360),
+                                    turns: const AlwaysStoppedAnimation(-45 / 360),
                                     child: Text(
                                       codigo[1],
                                       style: TextStyle(
@@ -91,8 +94,7 @@ class Carta extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 24),
+                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                           child: Text(
                             codigo[1],
                             style: const TextStyle(

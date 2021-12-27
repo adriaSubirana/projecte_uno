@@ -18,6 +18,8 @@ class PantallaJuego extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: StreamBuilder jugadors
+    // TODO: StreamBuilder partida
     return Container(
       color: Colors.black.withAlpha(170),
       child: Column(
@@ -29,10 +31,10 @@ class PantallaJuego extends StatelessWidget {
           ),
           barrajugador(
             jugadores: [
-              Jugador("pepe", true),
-              Jugador("lisa", false),
-              Jugador("jamito", false),
-              Jugador("bea", false),
+              Jugador("pepe"),
+              Jugador("lisa"),
+              Jugador("jamito"),
+              Jugador("bea"),
             ],
             turno: 2,
           ),
@@ -48,9 +50,9 @@ class PantallaJuego extends StatelessWidget {
                   Column(
                     children: [
                       Spacer(),
-                      UNO(j1: Jugador("pepe", true)),
+                      UNO(j1: Jugador("pepe")),
                       Spacer(),
-                      Robar(j1: Jugador("pepe", true), p1: Partida()),
+                      Robar(j1: Jugador("pepe"), p1: Partida()),
                       Spacer(),
                     ],
                   ),
@@ -62,6 +64,10 @@ class PantallaJuego extends StatelessWidget {
             flex: 3,
             child: CartasMano(
               cartas: mano,
+              onPressed: (codigo) {
+                // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                debugPrint(codigo);
+              },
             ),
           )
         ],

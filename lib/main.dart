@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/juego.dart';
 import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
+
+import 'pantallas/pantallaJuego/juego.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-var host = Jugador("host", true);
+var host = Jugador("host");
 var partida = Partida();
 
 class MyApp extends StatelessWidget {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 0,
         ),
-        body: Login(),
+        body: PantallaJuego(),
         /*body: Column(
           children: [
             StreamBuilder(
