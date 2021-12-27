@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 ),
               ),
-              Spacer(),
+              const SizedBox(height: 32),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       _crear_pulsado();
                     },
-                    label: Text(
+                    label: const Text(
                       "Crear",
                       style: TextStyle(
                           color: Colors.white,
@@ -101,15 +101,15 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold),
                     ),
                     backgroundColor: Colors.red[900],
-                    extendedPadding:
-                        EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    extendedPadding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
+                  const Padding(
+                      padding: EdgeInsets.symmetric(
                     horizontal: 12,
                   )),
                   FloatingActionButton.extended(
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       _unirse_pulsado();
                     },
-                    label: Text(
+                    label: const Text(
                       "Unirse",
                       style: TextStyle(
                           color: Colors.white,
@@ -132,14 +132,14 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold),
                     ),
                     backgroundColor: Colors.red[900],
-                    extendedPadding: EdgeInsets.all(12),
+                    extendedPadding: const EdgeInsets.all(12),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),
