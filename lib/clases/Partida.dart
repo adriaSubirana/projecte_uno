@@ -9,7 +9,6 @@ class Partida {
   late int turno;
 
   Partida() {
-    // Pasar Host
     cartasMesa = [];
     cartasRobar = [...barajaUno];
     cartasRobar.shuffle();
@@ -23,8 +22,12 @@ class Partida {
         enCurso = data['enCurso'],
         turno = data['turno'];
 
-  Map<String, dynamic> toFirestore() =>
-      {'cartasMesa': cartasMesa, 'cartasRobar': cartasRobar, 'enCurso': enCurso, 'turno': turno};
+  Map<String, dynamic> toFirestore() => {
+        'cartasMesa': cartasMesa,
+        'cartasRobar': cartasRobar,
+        'enCurso': enCurso,
+        'turno': turno
+      };
 }
 
 Stream<DocumentSnapshot<Partida>> partidaSnapshots(String id) {

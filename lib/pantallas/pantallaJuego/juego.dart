@@ -20,58 +20,55 @@ class PantallaJuego extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: StreamBuilder jugadors
     // TODO: StreamBuilder partida
-    return Container(
-      color: Colors.black.withAlpha(170),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Align(
-            child: Abandonar(),
-            alignment: Alignment.topLeft,
-          ),
-          barrajugador(
-            jugadores: [
-              Jugador("pepe"),
-              Jugador("lisa"),
-              Jugador("jamito"),
-              Jugador("bea"),
-            ],
-            turno: 2,
-          ),
-          Expanded(
-            flex: 8,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CartaMesa(carta: mesa),
-                  ),
-                  Column(
-                    children: [
-                      Spacer(),
-                      UNO(j1: Jugador("pepe")),
-                      Spacer(),
-                      Robar(j1: Jugador("pepe"), p1: Partida()),
-                      Spacer(),
-                    ],
-                  ),
-                ],
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          child: Abandonar(),
+          alignment: Alignment.topLeft,
+        ),
+        barrajugador(
+          jugadores: [
+            Jugador("pepe"),
+            Jugador("lisa"),
+            Jugador("jamito"),
+            Jugador("bea"),
+          ],
+          turno: 2,
+        ),
+        Expanded(
+          flex: 8,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CartaMesa(carta: mesa),
+                ),
+                Column(
+                  children: [
+                    Spacer(),
+                    UNO(j1: Jugador("pepe")),
+                    Spacer(),
+                    Robar(j1: Jugador("pepe"), p1: Partida()),
+                    Spacer(),
+                  ],
+                ),
+              ],
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: CartasMano(
-              cartas: mano,
-              onPressed: (codigo) {
-                // TODO: Si soy el jugador que tira, actualizar turno y cartas
-                debugPrint(codigo);
-              },
-            ),
-          )
-        ],
-      ),
+        ),
+        Expanded(
+          flex: 3,
+          child: CartasMano(
+            cartas: mano,
+            onPressed: (codigo) {
+              // TODO: Si soy el jugador que tira, actualizar turno y cartas
+              debugPrint(codigo);
+            },
+          ),
+        )
+      ],
     );
   }
 }

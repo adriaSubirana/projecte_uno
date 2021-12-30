@@ -28,10 +28,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: Scaffold(
+        backgroundColor: Color(0xFF515151),
         appBar: AppBar(
           toolbarHeight: 0,
         ),
-        body: PantallaJuego(),
+        body: Login(),
         /*body: Column(
           children: [
             StreamBuilder(
