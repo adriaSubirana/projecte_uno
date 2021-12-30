@@ -22,6 +22,7 @@ class _UNOState extends State<UNO> {
     _estado = widget.j1.uno;
   }
 
+  // ignore: non_constant_identifier_names
   void _UNOPulsado() {
     setState(() {
       if (widget.j1.cartas.length == 1) {
@@ -77,7 +78,8 @@ class _UNOState extends State<UNO> {
           focusElevation: 3,
           extendedPadding: const EdgeInsets.all(8),
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),
     );
