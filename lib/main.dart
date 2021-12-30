@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'pantallas/pantallaJuego/juego.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Wakelock.enable();
     return MaterialApp(
       title: 'Uno',
       theme: ThemeData(
