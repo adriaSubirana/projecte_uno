@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 0,
         ),
-        body: Login(),
+        body: PantallaJuego(),
         /*body: Column(
           children: [
             StreamBuilder(

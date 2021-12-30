@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
@@ -27,14 +28,19 @@ class PantallaJuego extends StatelessWidget {
           child: Abandonar(),
           alignment: Alignment.topLeft,
         ),
-        barrajugador(
-          jugadores: [
-            Jugador("pepe"),
-            Jugador("lisa"),
-            Jugador("jamito"),
-            Jugador("bea"),
-          ],
-          turno: 2,
+        StreamBuilder(
+          stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<Jugador>> snapshot,
+          ) {
+            if (!snapshot.hasData) {
+              return const Center(child: Text("Cargando..."));
+            }
+            final doc = snapshot.data!;
+
+            return Text(doc[0].nombre);
+          },
         ),
         Expanded(
           flex: 8,
