@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -87,6 +88,8 @@ class _LoginState extends State<Login> {
                     ElevatedButton(
                       onPressed: () {
                         // TODO: Soy el host, llamar a PantallaJugadores con host = true, nombre
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const PantallaJugadores()));
                         _crearPulsado();
                       },
                       child: const Text(
