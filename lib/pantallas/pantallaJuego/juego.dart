@@ -19,8 +19,6 @@ class PantallaJuego extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: StreamBuilder jugadors
-    // TODO: StreamBuilder partida
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -28,18 +26,37 @@ class PantallaJuego extends StatelessWidget {
           child: Abandonar(),
           alignment: Alignment.topLeft,
         ),
+        // TODO: StreamBuilder jugadors
         StreamBuilder(
           stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
           builder: (
             BuildContext context,
-            AsyncSnapshot<List<Jugador>> snapshot,
+            AsyncSnapshot<dynamic> snapshot,
           ) {
             if (!snapshot.hasData) {
-              return const Center(child: Text("Cargando..."));
+              return const Center(child: CircularProgressIndicator());
             }
             final doc = snapshot.data!;
+            if (doc.isEmpty) return Text("Vacio");
 
             return Text(doc[0].nombre);
+          },
+        ),
+        // TODO: StreamBuilder partida
+        StreamBuilder(
+          stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
+          ) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final doc = snapshot.data!;
+            final data = doc.data();
+            if (data == null) return Text("Null");
+
+            return Text("${data.turno}");
           },
         ),
         Expanded(
