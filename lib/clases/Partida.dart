@@ -17,8 +17,8 @@ class Partida {
   }
 
   Partida.fromFirestore(Map<String, dynamic> data)
-      : cartasMesa = data['cartasMesa'],
-        cartasRobar = data['cartasRobar'],
+      : cartasMesa = (data['cartasMesa'] as List).cast<String>(),
+        cartasRobar = (data['cartasRobar'] as List).cast<String>(),
         enCurso = data['enCurso'],
         turno = data['turno'];
 
