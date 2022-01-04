@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:projecte_uno/clases/Jugador.dart';
+import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 
 class Login extends StatefulWidget {
@@ -29,12 +32,22 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  void _crearPulsado() {
+  Future<void> _crearPulsado() async {
     debugPrint(controller.text + " host");
     setState(() {
       _crear = !_crear;
     });
-    Navigator.of(context).pushNamed('/espera');
+    final p = Partida();
+    final j = Jugador(controller.text);
+    final docSnap = await FirebaseFirestore.instance
+        .collection('/Partidas')
+        .add(p.toFirestore());
+    addJugador(docSnap.id, j);
+    Navigator.of(context).pushNamed('/espera').then((value) => FirebaseFirestore
+        .instance
+        .collection('/Partidas')
+        .doc(docSnap.id)
+        .delete());
   }
 
   void _unirsePulsado() {
