@@ -12,6 +12,7 @@ class PantallaJugadores extends StatefulWidget {
 }
 
 class _PantallaJugadoresState extends State<PantallaJugadores> {
+  late final String _id;
   final List<Jugador> jugadores = [
     Jugador('jaime'),
     Jugador('pepe'),
@@ -21,6 +22,9 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context) != null) {
+      _id = ModalRoute.of(context)!.settings.arguments as String;
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
       appBar: AppBar(
@@ -75,7 +79,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
             flex: 6,
             child: Center(
               child: Container(
-                child: const Text('       Codigo QR       '),
+                child: Text(_id),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white54),
                 ),
