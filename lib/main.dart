@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       //home: PantallaJuego(),
+      initialRoute: '/',
       routes: {
         '/': (context) => Login(),
         '/espera': (context) => PantallaJugadores(),

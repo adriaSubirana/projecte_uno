@@ -6,8 +6,8 @@ import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/CartasMesa.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/CartasMano.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/Robar.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/UNO.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/robar.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/uno.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/barrajugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
@@ -76,7 +76,7 @@ class PantallaJuego extends StatelessWidget {
                   Column(
                     children: [
                       Spacer(),
-                      UNO(j1: Jugador("pepe")),
+                      Uno(j1: Jugador("pepe")),
                       Spacer(),
                       Robar(j1: Jugador("pepe"), p1: Partida()),
                       Spacer(),
