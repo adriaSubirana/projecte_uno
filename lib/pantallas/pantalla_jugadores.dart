@@ -1,5 +1,4 @@
-// TODO: Hacer pantalla jugadores
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/juego.dart';
@@ -13,12 +12,6 @@ class PantallaJugadores extends StatefulWidget {
 
 class _PantallaJugadoresState extends State<PantallaJugadores> {
   late final String _id;
-  final List<Jugador> jugadores = [
-    Jugador('jaime'),
-    Jugador('pepe'),
-    Jugador('felipe'),
-    Jugador('oscar')
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +53,33 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.white54),
                     color: Colors.grey.withAlpha(50)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      JugadorEnJuego(jugadores: jugadores, i: 0),
-                      JugadorEnJuego(jugadores: jugadores, i: 1),
-                      JugadorEnJuego(jugadores: jugadores, i: 2),
-                      JugadorEnJuego(jugadores: jugadores, i: 3),
-                    ],
-                  ),
+                child: StreamBuilder(
+                  stream: jugadorsSnapshots(_id),
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                  ) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final jugadorSnaps = snapshot.data!.docs;
+                    final jugadores = jugadorSnaps
+                        .map(
+                          (docSnap) =>
+                              Jugador.fromFirestore(docSnap.id, docSnap.data()),
+                        )
+                        .toList();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          for (int i = 0; i < jugadores.length; i++)
+                            JugadorEnJuego(jugadores: jugadores, i: i),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -135,7 +144,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                             );
                           }).then((value) {
                         if (value != null && value) {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                         }
                       });
                       //Navigator.of(context).pop();

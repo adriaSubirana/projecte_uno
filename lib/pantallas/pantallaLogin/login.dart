@@ -43,11 +43,16 @@ class _LoginState extends State<Login> {
         .collection('/Partidas')
         .add(p.toFirestore());
     addJugador(docSnap.id, j);
-    Navigator.of(context).pushNamed('/espera', arguments: docSnap.id).then(
-        (value) => FirebaseFirestore.instance
+    Navigator.of(context)
+        .pushNamed('/espera', arguments: docSnap.id)
+        .then((value) {
+      if (value != null && value == true) {
+        FirebaseFirestore.instance
             .collection('/Partidas')
             .doc(docSnap.id)
-            .delete());
+            .delete();
+      }
+    });
   }
 
   void _unirsePulsado() {

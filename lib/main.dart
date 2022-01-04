@@ -31,13 +31,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: PantallaJuego(),
-      /*initialRoute: '/',
+      //home: PantallaJuego(),
+      initialRoute: '/',
       routes: {
         '/': (context) => Login(),
         '/espera': (context) => PantallaJugadores(),
         '/juego': (context) => PantallaJuego(),
-      },*/
+      },
     );
   }
 }
