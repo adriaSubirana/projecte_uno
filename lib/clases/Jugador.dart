@@ -38,19 +38,10 @@ class Jugador {
   }
 }
 
-Stream<List<Jugador>> jugadorsSnapshots(String partidaId) {
+Stream<QuerySnapshot<Map<String, dynamic>>> jugadorsSnapshots(
+    String partidaId) {
   final db = FirebaseFirestore.instance;
-  return db
-      .collection("/Partidas/$partidaId/Jugadores")
-      .snapshots()
-      .map((querySnap) {
-    final docs = querySnap.docs;
-    List<Jugador> jugadors = [];
-    for (final doc in docs) {
-      jugadors.add(Jugador.fromFirestore(doc.id, doc.data()));
-    }
-    return jugadors;
-  });
+  return db.collection("/Partidas/$partidaId/Jugadores").snapshots();
 }
 
 Future<void> addJugador(String idPartida, Jugador j) async {

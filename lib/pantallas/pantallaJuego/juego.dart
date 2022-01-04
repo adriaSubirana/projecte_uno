@@ -32,7 +32,7 @@ class PantallaJuego extends StatelessWidget {
             alignment: Alignment.topLeft,
           ),
           // TODO: StreamBuilder jugadors
-          StreamBuilder(
+          /*StreamBuilder(
             stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
             builder: (
               BuildContext context,
@@ -45,6 +45,25 @@ class PantallaJuego extends StatelessWidget {
               if (doc.isEmpty) return Text("Vacio");
 
               return Text(doc[0].nombre);
+            },
+          ),*/
+          StreamBuilder(
+            stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+            ) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final jugadorSnaps = snapshot.data!.docs;
+              final jugadors = jugadorSnaps
+                  .map(
+                    (docSnap) =>
+                        Jugador.fromFirestore(docSnap.id, docSnap.data()),
+                  )
+                  .toList();
+              return Text(jugadors[0].nombre);
             },
           ),
           // TODO: StreamBuilder partida
