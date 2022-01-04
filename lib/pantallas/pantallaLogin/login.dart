@@ -110,6 +110,7 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           // TODO: Soy el host, llamar a PantallaJugadores con host = true, nombre
                           _crearPulsado();
+                          Navigator.of(context).pushNamed('/espera');
                         },
                         child: const Text(
                           "Crear",
