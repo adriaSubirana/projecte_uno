@@ -114,7 +114,31 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                     ),
                     color: Colors.red.withAlpha(100),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      showDialog<bool>(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Abandonar"),
+                              content: const Text(
+                                  "Seguro que quieres abandonar la partida?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: const Text("Cancelar"),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text("Abandonar"),
+                                ),
+                              ],
+                            );
+                          }).then((value) {
+                        if (value != null && value) {
+                          Navigator.of(context).pop();
+                        }
+                      });
+                      //Navigator.of(context).pop();
                     },
                     splashColor: Colors.yellow,
                   ),

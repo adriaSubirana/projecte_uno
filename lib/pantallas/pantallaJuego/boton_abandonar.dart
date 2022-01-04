@@ -16,8 +16,8 @@ class _AbandonarState extends State<Abandonar> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text("Salir"),
-              content: const Text("Seguro que quieres salir de la partida?"),
+              title: const Text("Abandonar"),
+              content: const Text("Seguro que quieres abandonar la partida?"),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, "Cancel"),
