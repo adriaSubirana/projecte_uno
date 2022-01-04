@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
+import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'pantallas/pantallaJuego/juego.dart';
@@ -25,39 +26,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Wakelock.enable();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Uno',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: Scaffold(
-        backgroundColor: Color(0xFF515151),
-        appBar: AppBar(
-          toolbarHeight: 0,
-        ),
-        body: PantallaJuego(),
-        /*body: Column(
-          children: [
-            StreamBuilder(
-              stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
-              ) {
-                if (!snapshot.hasData) {
-                  return Expanded(
-                      child: const Center(child: CircularProgressIndicator()));
-                }
-                final doc = snapshot.data!;
-                final data = doc.data();
-
-                return Expanded(
-                    child: Center(child: Text("${data?['turno']}")));
-              },
-            ),
-            Expanded(child: PantallaJuego()),
-          ],
-        ),*/
-      ),
+      //home: PantallaJuego(),
+      routes: {
+        '/': (context) => Login(),
+        '/espera': (context) => PantallaJugadores(),
+        '/juego': (context) => PantallaJuego(),
+      },
     );
   }
 }

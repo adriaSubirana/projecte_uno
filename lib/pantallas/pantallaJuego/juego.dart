@@ -19,79 +19,85 @@ class PantallaJuego extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          child: Abandonar(),
-          alignment: Alignment.topLeft,
-        ),
-        // TODO: StreamBuilder jugadors
-        StreamBuilder(
-          stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<dynamic> snapshot,
-          ) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final doc = snapshot.data!;
-            if (doc.isEmpty) return Text("Vacio");
-
-            return Text(doc[0].nombre);
-          },
-        ),
-        // TODO: StreamBuilder partida
-        StreamBuilder(
-          stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
-          ) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final doc = snapshot.data!;
-            final data = doc.data();
-            if (data == null) return Text("Null");
-
-            return Text("${data.turno}");
-          },
-        ),
-        Expanded(
-          flex: 8,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CartaMesa(carta: mesa),
-                ),
-                Column(
-                  children: [
-                    Spacer(),
-                    UNO(j1: Jugador("pepe")),
-                    Spacer(),
-                    Robar(j1: Jugador("pepe"), p1: Partida()),
-                    Spacer(),
-                  ],
-                ),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: const Color(0xFF515151),
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Align(
+            child: Abandonar(),
+            alignment: Alignment.topLeft,
           ),
-        ),
-        Expanded(
-          flex: 3,
-          child: CartasMano(
-            cartas: mano,
-            onPressed: (codigo) {
-              // TODO: Si soy el jugador que tira, actualizar turno y cartas
-              debugPrint(codigo);
+          // TODO: StreamBuilder jugadors
+          StreamBuilder(
+            stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<Jugador>> snapshot,
+            ) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final doc = snapshot.data!;
+              if (doc.isEmpty) return Text("Vacio");
+
+              return Text(doc[0].nombre);
             },
           ),
-        )
-      ],
+          // TODO: StreamBuilder partida
+          StreamBuilder(
+            stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
+            ) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final doc = snapshot.data!;
+              final data = doc.data();
+              if (data == null) return Text("Null");
+
+              return Text("${data.turno}");
+            },
+          ),
+          Expanded(
+            flex: 8,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CartaMesa(carta: mesa),
+                  ),
+                  Column(
+                    children: [
+                      Spacer(),
+                      UNO(j1: Jugador("pepe")),
+                      Spacer(),
+                      Robar(j1: Jugador("pepe"), p1: Partida()),
+                      Spacer(),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: CartasMano(
+              cartas: mano,
+              onPressed: (codigo) {
+                // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                debugPrint(codigo);
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
