@@ -37,7 +37,7 @@ class PantallaJuego extends StatelessWidget {
           final doc = snapshot.data!;
           final partida = doc.data();
           final docPartida =
-              FirebaseFirestore.instance.collection("/Partida").doc(_id);
+              FirebaseFirestore.instance.collection("/Partidas").doc(_id);
           if (partida == null) return Text("Esta partida no existe");
           return StreamBuilder(
             stream: jugadorsSnapshots(_id),
@@ -175,11 +175,30 @@ class PantallaJuego extends StatelessWidget {
                         child: CartasMano(
                           cartas: yo.cartas,
                           onPressed: (codigo) {
-                            partida.turno % jugadores.length == yo.orden
-                                ?
-                                // TODO: Actualizar turno y cartas
-                                debugPrint(codigo)
-                                : null;
+                            if (partida.turno % jugadores.length == yo.orden) {
+                              // TODO: Actualizar turno y cartas
+                              if (codigo[0] == partida.cartasMesa.last[0] ||
+                                  codigo[1] == partida.cartasMesa.last[1]) {
+                                partida.cartasMesa.add(codigo);
+                                partida.turno++;
+                                docPartida
+                                    .update(partida.toFirestore())
+                                    .then((value) =>
+                                        debugPrint("Partida updated"))
+                                    .catchError((error) => debugPrint(
+                                        "Failed to update partida: $error"));
+                                yo.cartas.remove(codigo);
+                                collectionJugadores
+                                    .doc(yo.id)
+                                    .update(yo.toFirestore())
+                                    .then((value) => debugPrint("yo updated"))
+                                    .catchError((error) => debugPrint(
+                                        "Failed to update yo: $error"));
+                                debugPrint(codigo);
+                              }
+                            } else {
+                              null;
+                            }
                           },
                         ),
                       ),
