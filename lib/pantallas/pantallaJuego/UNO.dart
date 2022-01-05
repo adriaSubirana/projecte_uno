@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/clases/Jugador.dart';
+import 'package:projecte_uno/clases/jugador.dart';
 
 class Uno extends StatefulWidget {
   final Jugador j1;
