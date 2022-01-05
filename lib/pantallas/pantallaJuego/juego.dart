@@ -36,7 +36,7 @@ class PantallaJuego extends StatelessWidget {
           }
           final doc = snapshot.data!;
           final partida = doc.data();
-          final collection =
+          final docPartida =
               FirebaseFirestore.instance.collection("/Partida").doc(_id);
           if (partida == null) return Text("Esta partida no existe");
           return StreamBuilder(
@@ -55,9 +55,12 @@ class PantallaJuego extends StatelessWidget {
                         Jugador.fromFirestore(docSnap.id, docSnap.data()),
                   )
                   .toList();
+
+              if (jugadores.isEmpty) return Text("No hay jugadores");
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
-              final mano = yo.cartas;
               final otros = jugadores.where((j) => j.nombre != _nombre);
+              final collectionJugadores = FirebaseFirestore.instance
+                  .collection("/Partidas/$_id/Jugadores");
 
               return Container(
                 decoration: partida.turno % jugadores.length == yo.orden
@@ -84,13 +87,10 @@ class PantallaJuego extends StatelessWidget {
                             host: _host,
                             salir: () {
                               if (_host) {
-                                collection.delete();
+                                docPartida.delete();
                               } else {
                                 // TODO: Pasar totes les cartes del jugador a cartasRobar
-                                FirebaseFirestore.instance
-                                    .collection("/Partidas/$_id/Jugadores")
-                                    .doc(yo.id)
-                                    .delete();
+                                collectionJugadores.doc(yo.id).delete();
                               }
                               Navigator.pop(context);
                             },
@@ -142,13 +142,23 @@ class PantallaJuego extends StatelessWidget {
                                           yo.orden
                                       ? () {
                                           // TODO: Actualizar turno y cartas
-                                          partida.turno++;
-                                          collection
-                                              .update({'turno': 4})
+                                          yo.addCarta(
+                                              partida.cartasRobar.first);
+                                          collectionJugadores
+                                              .doc(yo.id)
+                                              .update(yo.toFirestore())
                                               .then((value) =>
-                                                  debugPrint("turno updated"))
+                                                  debugPrint("yo updated"))
                                               .catchError((error) => debugPrint(
-                                                  "Failed to update turno: $error"));
+                                                  "Failed to update yo: $error"));
+                                          partida.cartasRobar.removeAt(0);
+                                          partida.turno++;
+                                          docPartida
+                                              .update(partida.toFirestore())
+                                              .then((value) =>
+                                                  debugPrint("Partida updated"))
+                                              .catchError((error) => debugPrint(
+                                                  "Failed to update partida: $error"));
                                         }
                                       : null,
                                 ),
@@ -163,7 +173,7 @@ class PantallaJuego extends StatelessWidget {
                       flex: 3,
                       child: Center(
                         child: CartasMano(
-                          cartas: mano,
+                          cartas: yo.cartas,
                           onPressed: (codigo) {
                             partida.turno % jugadores.length == yo.orden
                                 ?
