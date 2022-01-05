@@ -6,16 +6,17 @@ import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/CartasMesa.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/CartasMano.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/robar.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/Robar.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/uno.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/barrajugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
-  final mano = ["b0", "y4", "r8", "g7", "g9", "r3", "b2", "k%", "y5", "y4"];
-  final mesa = ["b1", "y5", "r9", "g8", "g0", "r4", "r3"];
+  final _nombre = 'Eustaquio';
+  final _host = true;
+  final _id = "5k9aj8mcVC6X5FOldq8o";
 
-  PantallaJuego({Key? key}) : super(key: key);
+  const PantallaJuego({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +25,20 @@ class PantallaJuego extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Align(
-            child: Abandonar(),
-            alignment: Alignment.topLeft,
-          ),
-          // TODO: StreamBuilder jugadors
-          StreamBuilder(
-            stream: jugadorsSnapshots("5k9aj8mcVC6X5FOldq8o"),
+      body: StreamBuilder(
+        stream: partidaSnapshots(_id),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
+        ) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final doc = snapshot.data!;
+          final partida = doc.data();
+          if (partida == null) return Text("Esta partida no existe");
+          return StreamBuilder(
+            stream: jugadorsSnapshots(_id),
             builder: (
               BuildContext context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -48,59 +53,74 @@ class PantallaJuego extends StatelessWidget {
                         Jugador.fromFirestore(docSnap.id, docSnap.data()),
                   )
                   .toList();
-              return barrajugador(jugadores: jugadores, turno: 0);
-            },
-          ),
-          // TODO: StreamBuilder partida
-          StreamBuilder(
-            stream: partidaSnapshots("5k9aj8mcVC6X5FOldq8o"),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
-            ) {
-              if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              final doc = snapshot.data!;
-              final data = doc.data();
-              if (data == null) return Text("Null");
+              jugadores.sort((a, b) => a.orden.compareTo(b.orden));
+              final yo = jugadores.where((j) => j.nombre == _nombre).first;
+              final mano = yo.cartas;
+              final otros = jugadores.where((j) => j.nombre != _nombre);
 
-              return Text("${data.turno}");
-            },
-          ),
-          Expanded(
-            flex: 8,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Align(
+                    child: Abandonar(),
+                    alignment: Alignment.topLeft,
+                  ),
+                  barrajugador(
+                      jugadores: otros,
+                      turno: partida.turno % jugadores.length),
                   Expanded(
-                    child: CartaMesa(carta: mesa),
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CartaMesa(carta: partida.cartasMesa),
+                          ),
+                          Column(
+                            children: [
+                              Spacer(),
+                              Uno(j1: yo),
+                              Spacer(),
+                              Robar(j1: yo, p1: partida),
+                              Spacer(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Spacer(),
-                      Uno(j1: Jugador("pepe")),
-                      Spacer(),
-                      Robar(j1: Jugador("pepe"), p1: Partida()),
-                      Spacer(),
-                    ],
-                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Center(
+                      child: Container(
+                        decoration: partida.turno % jugadores.length == yo.orden
+                            ? BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.lime,
+                                    spreadRadius: 7,
+                                    blurRadius: 7,
+                                  ),
+                                ],
+                              )
+                            : null,
+                        child: CartasMano(
+                          cartas: mano,
+                          onPressed: (codigo) {
+                            // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                            debugPrint(codigo);
+                          },
+                        ),
+                      ),
+                    ),
+                  )
                 ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: CartasMano(
-              cartas: mano,
-              onPressed: (codigo) {
-                // TODO: Si soy el jugador que tira, actualizar turno y cartas
-                debugPrint(codigo);
-              },
-            ),
-          )
-        ],
+              );
+            },
+          );
+        },
       ),
     );
   }

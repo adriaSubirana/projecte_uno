@@ -21,11 +21,12 @@ class _CartasManoState extends State<CartasMano> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Align(
           alignment: Alignment.topLeft,
-          widthFactor: 0.45,
+          widthFactor: index != widget.cartas.length - 1 ? 0.45 : 1,
           child: Carta(
             codigo: widget.cartas[index],
             onPressed: widget.onPressed,

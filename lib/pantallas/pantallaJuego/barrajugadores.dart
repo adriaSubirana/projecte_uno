@@ -5,7 +5,7 @@ import 'package:projecte_uno/clases/Jugador.dart';
 import 'package:projecte_uno/clases/Partida.dart';
 
 class barrajugador extends StatelessWidget {
-  final List<Jugador> jugadores;
+  final Iterable<Jugador> jugadores;
   final int turno;
   const barrajugador({
     Key? key,
@@ -22,12 +22,12 @@ class barrajugador extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (int i = 0; i < jugadores.length; i++)
+            for (final j in jugadores)
               Container(
                 width: 55,
                 height: 75,
-                child: showuser(numcartas: jugadores[i].cartas.length, nombre: jugadores[i].nombre),
-                decoration: i == turno
+                child: showuser(numcartas: j.cartas.length, nombre: j.nombre),
+                decoration: j.orden == turno
                     ? BoxDecoration(
                         color: Colors.grey[800],
                         borderRadius: BorderRadius.circular(10),
@@ -65,7 +65,8 @@ class showuser extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 3, 3, 0),
-              child: Icon(Icons.person, color: Colors.white.withAlpha(200), size: 55),
+              child: Icon(Icons.person,
+                  color: Colors.white.withAlpha(200), size: 55),
             ),
             Container(
               width: 55,
@@ -76,16 +77,20 @@ class showuser extends StatelessWidget {
                 child: Container(
                     width: 15,
                     height: 15,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.red),
                     child: Center(
                         child: Text("$numcartas",
                             style: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)))),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12)))),
               ),
             ),
           ],
         ),
-        Text(nombre, style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
+        Text(nombre,
+            style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
       ],
     );
   }
