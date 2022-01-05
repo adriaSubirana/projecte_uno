@@ -144,7 +144,7 @@ class PantallaJuego extends StatelessWidget {
                                           // TODO: Actualizar turno y cartas
                                           partida.turno++;
                                           collection
-                                              .set(partida.toFirestore())
+                                              .update(partida.toFirestore())
                                               .then((value) =>
                                                   debugPrint("turno updated"))
                                               .catchError((error) => debugPrint(
