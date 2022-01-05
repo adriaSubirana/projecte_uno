@@ -4,7 +4,7 @@ import 'package:projecte_uno/clases/Jugador.dart';
 
 class Robar extends StatefulWidget {
   final Partida partida;
-  final onPressed;
+  final void Function()? onPressed;
   const Robar({Key? key, required this.partida, required this.onPressed})
       : super(key: key);
 

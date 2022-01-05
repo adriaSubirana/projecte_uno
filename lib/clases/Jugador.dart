@@ -7,7 +7,6 @@ class Jugador {
   bool uno = false;
   int orden = -1;
   late String nombre;
-  // late bool host; // TODO: treure aquest camp
   List<String> cartas = [];
 
   Jugador(this.nombre);
@@ -51,6 +50,3 @@ Future<void> addJugador(String idPartida, Jugador j) async {
       .add(j.toFirestore());
   j.id = doc.id;
 }
-
-//var j1 = Jugador("Juan", false);
-//var j2 = Jugador.copia(j1);

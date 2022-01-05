@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Abandonar extends StatefulWidget {
   final bool host;
-  final salir, then;
+  final void Function()? salir;
+  final then;
   const Abandonar(
       {Key? key, required this.host, required this.salir, required this.then})
       : super(key: key);

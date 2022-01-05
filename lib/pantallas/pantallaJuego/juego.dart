@@ -143,7 +143,7 @@ class PantallaJuego extends StatelessWidget {
                                   onPressed: partida.turno % jugadores.length ==
                                           yo.orden
                                       ? () {
-                                          // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                                          // TODO: Actualizar turno y cartas
                                           debugPrint("Robar");
                                         }
                                       : null,
@@ -163,7 +163,7 @@ class PantallaJuego extends StatelessWidget {
                           onPressed: (codigo) {
                             partida.turno % jugadores.length == yo.orden
                                 ?
-                                // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                                // TODO: Actualizar turno y cartas
                                 debugPrint(codigo)
                                 : null;
                           },
