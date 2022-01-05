@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Abandonar extends StatefulWidget {
-  const Abandonar({Key? key}) : super(key: key);
+  final bool host;
+  final salir, then;
+  const Abandonar(
+      {Key? key, required this.host, required this.salir, required this.then})
+      : super(key: key);
 
   @override
   _AbandonarState createState() => _AbandonarState();
@@ -17,22 +21,24 @@ class _AbandonarState extends State<Abandonar> {
           builder: (context) {
             return AlertDialog(
               title: const Text("Abandonar"),
-              content: const Text("Seguro que quieres abandonar la partida?"),
+              content: Text(
+                !widget.host
+                    ? "Seguro que quieres abandonar la partida?"
+                    : "Seguro que quieres abandonar la partida?\nLa partida se eliminará y el juego acabará para todos",
+              ),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context, "Cancel"),
+                  onPressed: () => Navigator.pop(context),
                   child: const Text("Cancelar"),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, "Salir");
-                  },
+                  onPressed: widget.salir,
                   child: const Text("Salir"),
                 )
               ],
             );
           },
-        );
+        ).then(widget.then);
       },
       icon: const Icon(
         Icons.close,

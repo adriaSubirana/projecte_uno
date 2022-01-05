@@ -79,7 +79,28 @@ class PantallaJuego extends StatelessWidget {
                     Stack(
                       children: [
                         Align(
-                          child: Abandonar(),
+                          child: Abandonar(
+                            host: _host,
+                            salir: () {
+                              if (_host) {
+                                FirebaseFirestore.instance
+                                    .collection("/Partidas")
+                                    .doc(_id)
+                                    .delete();
+                              } else {
+                                // TODO: Pasar totes les cartes del jugador a cartasRobar
+                                FirebaseFirestore.instance
+                                    .collection("/Partidas/$_id/Jugadores")
+                                    .doc(yo.id)
+                                    .delete();
+                              }
+                              Navigator.pop(context);
+                            },
+                            then: () {
+                              // TODO: si abandones retorna false i ha de tornar a /login però si s'acaba la partida torna a /espera
+                              Navigator.pop(context, false);
+                            },
+                          ),
                           alignment: Alignment.topLeft,
                         ),
                         Padding(
@@ -122,6 +143,7 @@ class PantallaJuego extends StatelessWidget {
                                   onPressed: partida.turno % jugadores.length ==
                                           yo.orden
                                       ? () {
+                                          // TODO: Si soy el jugador que tira, actualizar turno y cartas
                                           debugPrint("Robar");
                                         }
                                       : null,
