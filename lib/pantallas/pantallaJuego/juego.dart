@@ -36,6 +36,8 @@ class PantallaJuego extends StatelessWidget {
           }
           final doc = snapshot.data!;
           final partida = doc.data();
+          final collection =
+              FirebaseFirestore.instance.collection("/Partida").doc(_id);
           if (partida == null) return Text("Esta partida no existe");
           return StreamBuilder(
             stream: jugadorsSnapshots(_id),
@@ -53,7 +55,6 @@ class PantallaJuego extends StatelessWidget {
                         Jugador.fromFirestore(docSnap.id, docSnap.data()),
                   )
                   .toList();
-              jugadores.sort((a, b) => a.orden.compareTo(b.orden));
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
               final mano = yo.cartas;
               final otros = jugadores.where((j) => j.nombre != _nombre);
@@ -83,10 +84,7 @@ class PantallaJuego extends StatelessWidget {
                             host: _host,
                             salir: () {
                               if (_host) {
-                                FirebaseFirestore.instance
-                                    .collection("/Partidas")
-                                    .doc(_id)
-                                    .delete();
+                                collection.delete();
                               } else {
                                 // TODO: Pasar totes les cartes del jugador a cartasRobar
                                 FirebaseFirestore.instance
@@ -144,6 +142,13 @@ class PantallaJuego extends StatelessWidget {
                                           yo.orden
                                       ? () {
                                           // TODO: Actualizar turno y cartas
+                                          partida.turno++;
+                                          collection
+                                              .set(partida.toFirestore())
+                                              .then((value) =>
+                                                  debugPrint("turno updated"))
+                                              .catchError((error) => debugPrint(
+                                                  "Failed to update turno: $error"));
                                           debugPrint("Robar");
                                         }
                                       : null,
