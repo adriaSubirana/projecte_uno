@@ -61,18 +61,44 @@ class PantallaJuego extends StatelessWidget {
               return Container(
                 decoration: partida.turno % jugadores.length == yo.orden
                     ? BoxDecoration(
-                        border: Border.all(color: Colors.lime, width: 5),
-                        color: Color(0xFF515151),
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.yellow,
+                          ),
+                          const BoxShadow(
+                            color: Color(0xFF515151),
+                            spreadRadius: -6,
+                            blurRadius: 6,
+                          ),
+                        ],
                       )
-                    : BoxDecoration(
-                        color: Color(0xFF515151),
-                      ),
+                    : null,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Align(
+                    /*Align(
                       child: Abandonar(),
                       alignment: Alignment.topLeft,
+                    ),*/
+                    Stack(
+                      children: [
+                        Align(
+                          child: Abandonar(),
+                          alignment: Alignment.topLeft,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              partida.turno % jugadores.length == yo.orden
+                                  ? "Tu turno"
+                                  : "Turno de ${jugadores.where((j) => j.orden == partida.turno % jugadores.length).first.nombre}",
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     barrajugador(
                         jugadores: otros,
