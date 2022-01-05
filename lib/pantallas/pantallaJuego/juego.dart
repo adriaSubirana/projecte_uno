@@ -76,10 +76,6 @@ class PantallaJuego extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    /*Align(
-                      child: Abandonar(),
-                      alignment: Alignment.topLeft,
-                    ),*/
                     Stack(
                       children: [
                         Align(
@@ -94,7 +90,10 @@ class PantallaJuego extends StatelessWidget {
                               partida.turno % jugadores.length == yo.orden
                                   ? "Tu turno"
                                   : "Turno de ${jugadores.where((j) => j.orden == partida.turno % jugadores.length).first.nombre}",
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
@@ -118,7 +117,15 @@ class PantallaJuego extends StatelessWidget {
                                 Spacer(),
                                 Uno(j1: yo),
                                 Spacer(),
-                                Robar(j1: yo, p1: partida),
+                                Robar(
+                                  partida: partida,
+                                  onPressed: partida.turno % jugadores.length ==
+                                          yo.orden
+                                      ? () {
+                                          debugPrint("Robar");
+                                        }
+                                      : null,
+                                ),
                                 Spacer(),
                               ],
                             ),
@@ -129,29 +136,18 @@ class PantallaJuego extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: Center(
-                        /*child: Container(
-                          decoration:
-                              partida.turno % jugadores.length == yo.orden
-                                  ? BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.lime,
-                                          spreadRadius: 7,
-                                          blurRadius: 7,
-                                        ),
-                                      ],
-                                    )
-                                  : null,*/
                         child: CartasMano(
                           cartas: mano,
                           onPressed: (codigo) {
-                            // TODO: Si soy el jugador que tira, actualizar turno y cartas
-                            debugPrint(codigo);
+                            partida.turno % jugadores.length == yo.orden
+                                ?
+                                // TODO: Si soy el jugador que tira, actualizar turno y cartas
+                                debugPrint(codigo)
+                                : null;
                           },
                         ),
                       ),
                     ),
-                    //)
                   ],
                 ),
               );
