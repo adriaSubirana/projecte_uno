@@ -11,12 +11,13 @@ class PantallaJugadores extends StatefulWidget {
 }
 
 class _PantallaJugadoresState extends State<PantallaJugadores> {
-  late final String _id;
+  late final List<dynamic> _infoJugador;
 
   @override
   Widget build(BuildContext context) {
     if (ModalRoute.of(context) != null) {
-      _id = ModalRoute.of(context)!.settings.arguments as String;
+      _infoJugador =
+          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
     }
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
@@ -54,7 +55,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                     border: Border.all(color: Colors.white54),
                     color: Colors.grey.withAlpha(50)),
                 child: StreamBuilder(
-                  stream: jugadorsSnapshots(_id),
+                  stream: jugadorsSnapshots(_infoJugador[1]),
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -88,7 +89,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
             flex: 6,
             child: Center(
               child: Container(
-                child: Text(_id),
+                child: Text(_infoJugador[1]),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white54),
                 ),
@@ -175,7 +176,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                     color: Colors.red[900],
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PantallaJuego()));
+                          builder: (context) => const PantallaJuego()));
                     },
                     splashColor: Colors.yellow,
                   )

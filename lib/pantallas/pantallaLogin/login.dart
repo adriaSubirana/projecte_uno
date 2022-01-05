@@ -12,53 +12,54 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  late TextEditingController controller;
-  late bool _crear;
-  late bool _unirse;
+  late TextEditingController _controller;
+  late List<dynamic> _jugadorInfo;
 
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController(
+    _jugadorInfo = ["nombre", "id", false];
+    _controller = TextEditingController(
       text: "",
     );
-    _crear = false;
-    _unirse = false;
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   Future<void> _crearPulsado() async {
-    debugPrint(controller.text + " host");
-    setState(() {
-      _crear = !_crear;
-    });
+    debugPrint(_controller.text + " host");
     final p = Partida();
-    final j = Jugador(controller.text);
+    final j = Jugador(_controller.text);
     final docSnap = await FirebaseFirestore.instance
         .collection('/Partidas')
         .add(p.toFirestore());
     addJugador(docSnap.id, j);
+    setState(() {
+      _jugadorInfo[2] = true;
+      _jugadorInfo[0] = _controller.text;
+      _jugadorInfo[1] = docSnap.id;
+    });
     Navigator.of(context)
-        .pushNamed('/espera', arguments: docSnap.id)
+        .pushNamed('/espera', arguments: _jugadorInfo)
         .then((value) {
       if (value != null && value == true) {
         FirebaseFirestore.instance
             .collection('/Partidas')
-            .doc(docSnap.id)
+            .doc(_jugadorInfo[1])
             .delete();
       }
     });
   }
 
   void _unirsePulsado() {
-    debugPrint(controller.text + " no host");
+    debugPrint(_controller.text + " no host");
     setState(() {
-      _unirse = !_unirse;
+      _jugadorInfo[0] = _controller.text;
+      _jugadorInfo[2] = false;
     });
   }
 
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   TextField(
-                    controller: controller,
+                    controller: _controller,
                     textCapitalization: TextCapitalization.words,
                     style: const TextStyle(color: Colors.white),
                     maxLength: 15,
@@ -113,7 +114,6 @@ class _LoginState extends State<Login> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: Soy el host, llamar a PantallaJugadores con host = true, nombre
                           _crearPulsado();
                           Navigator.of(context).pushNamed('/espera');
                         },
@@ -147,7 +147,6 @@ class _LoginState extends State<Login> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: No soy el host, llamar a PantallaJugadores con host = false, nombre
                           _unirsePulsado();
                         },
                         child: const Text(
