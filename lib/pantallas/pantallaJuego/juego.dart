@@ -58,54 +58,64 @@ class PantallaJuego extends StatelessWidget {
               final mano = yo.cartas;
               final otros = jugadores.where((j) => j.nombre != _nombre);
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Align(
-                    child: Abandonar(),
-                    alignment: Alignment.topLeft,
-                  ),
-                  barrajugador(
-                      jugadores: otros,
-                      turno: partida.turno % jugadores.length),
-                  Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CartaMesa(carta: partida.cartasMesa),
-                          ),
-                          Column(
-                            children: [
-                              Spacer(),
-                              Uno(j1: yo),
-                              Spacer(),
-                              Robar(j1: yo, p1: partida),
-                              Spacer(),
-                            ],
-                          ),
-                        ],
+              return Container(
+                decoration: partida.turno % jugadores.length == yo.orden
+                    ? BoxDecoration(
+                        border: Border.all(color: Colors.lime, width: 5),
+                        color: Color(0xFF515151),
+                      )
+                    : BoxDecoration(
+                        color: Color(0xFF515151),
+                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Align(
+                      child: Abandonar(),
+                      alignment: Alignment.topLeft,
+                    ),
+                    barrajugador(
+                        jugadores: otros,
+                        turno: partida.turno % jugadores.length),
+                    Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CartaMesa(carta: partida.cartasMesa),
+                            ),
+                            Column(
+                              children: [
+                                Spacer(),
+                                Uno(j1: yo),
+                                Spacer(),
+                                Robar(j1: yo, p1: partida),
+                                Spacer(),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: Container(
-                        decoration: partida.turno % jugadores.length == yo.orden
-                            ? BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.lime,
-                                    spreadRadius: 7,
-                                    blurRadius: 7,
-                                  ),
-                                ],
-                              )
-                            : null,
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                        /*child: Container(
+                          decoration:
+                              partida.turno % jugadores.length == yo.orden
+                                  ? BoxDecoration(
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.lime,
+                                          spreadRadius: 7,
+                                          blurRadius: 7,
+                                        ),
+                                      ],
+                                    )
+                                  : null,*/
                         child: CartasMano(
                           cartas: mano,
                           onPressed: (codigo) {
@@ -115,8 +125,9 @@ class PantallaJuego extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
-                ],
+                    //)
+                  ],
+                ),
               );
             },
           );
