@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, unused_import, avoid_unnecessary_containers, camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/clases/Jugador.dart';
-import 'package:projecte_uno/clases/Partida.dart';
+import 'package:projecte_uno/clases/jugador.dart';
+import 'package:projecte_uno/clases/partida.dart';
 
 class barrajugador extends StatelessWidget {
   final Iterable<Jugador> jugadores;

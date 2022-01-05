@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/build_carta.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/carta.dart';
 
 class CartasMano extends StatefulWidget {
   final List<String> cartas;

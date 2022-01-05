@@ -2,13 +2,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/clases/Jugador.dart';
-import 'package:projecte_uno/clases/Partida.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/CartasMesa.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/CartasMano.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/Robar.dart';
+import 'package:projecte_uno/clases/jugador.dart';
+import 'package:projecte_uno/clases/partida.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mesa.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mano.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/robar.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/uno.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/barrajugadores.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
@@ -144,12 +144,11 @@ class PantallaJuego extends StatelessWidget {
                                           // TODO: Actualizar turno y cartas
                                           partida.turno++;
                                           collection
-                                              .update(partida.toFirestore())
+                                              .update({'turno': 4})
                                               .then((value) =>
                                                   debugPrint("turno updated"))
                                               .catchError((error) => debugPrint(
                                                   "Failed to update turno: $error"));
-                                          debugPrint("Robar");
                                         }
                                       : null,
                                 ),

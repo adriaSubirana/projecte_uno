@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projecte_uno/clases/uno.dart';
+import 'package:projecte_uno/clases/baraja_uno.dart';
 
 class Partida {
   late List<String> cartasMesa, cartasRobar;
