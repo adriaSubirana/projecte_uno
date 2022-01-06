@@ -8,6 +8,55 @@ const Map<String, Color> cardColor = {
   'k': Colors.black,
 };
 
+Widget cardSymbol(String s, Color c) {
+  final double size = c == Colors.white ? 48 : 112;
+  if (s[1] == '#') {
+    return Icon(
+      Icons.not_interested,
+      color: c,
+      size: size,
+    );
+  } else if (s[1] == '%') {
+    return Icon(
+      Icons.autorenew_rounded,
+      color: c,
+      size: size,
+    );
+  } else if (s[1] == '€') {
+    if (s[0] == 'k') {
+      // TODO: Cambiar icono del centro
+      return Text(
+        "+4",
+        style: TextStyle(
+          color: c,
+          fontWeight: FontWeight.bold,
+          fontSize: size,
+        ),
+      );
+    } else {
+      // TODO: Cambiar icono del centro
+      return Text(
+        "+2",
+        style: TextStyle(
+          color: c,
+          fontWeight: FontWeight.bold,
+          fontSize: size,
+        ),
+      );
+    }
+    // TODO: Simbolo cambio de color
+  } else {
+    return Text(
+      s[1],
+      style: TextStyle(
+        color: c,
+        fontWeight: FontWeight.bold,
+        fontSize: size,
+      ),
+    );
+  }
+}
+
 class Carta extends StatelessWidget {
   final String codigo;
   final void Function(String)? onPressed; // una funció: void f()
@@ -49,16 +98,9 @@ class Carta extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                          child: Text(
-                            codigo[1],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 48,
-                            ),
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 24),
+                            child: cardSymbol(codigo, Colors.white)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16),
@@ -75,15 +117,10 @@ class Carta extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: RotationTransition(
-                                    turns: const AlwaysStoppedAnimation(-45 / 360),
-                                    child: Text(
-                                      codigo[1],
-                                      style: TextStyle(
-                                        color: cardColor[codigo[0]],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 96,
-                                      ),
-                                    ),
+                                    turns:
+                                        const AlwaysStoppedAnimation(-45 / 360),
+                                    child: cardSymbol(
+                                        codigo, cardColor[codigo[0]]!),
                                   ),
                                 ),
                               ),
@@ -94,16 +131,9 @@ class Carta extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                          child: Text(
-                            codigo[1],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 48,
-                            ),
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 24),
+                            child: cardSymbol(codigo, Colors.white)),
                       ),
                     ],
                   ),

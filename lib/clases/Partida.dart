@@ -6,7 +6,7 @@ import 'package:projecte_uno/clases/baraja_uno.dart';
 class Partida {
   late List<String> cartasMesa, cartasRobar;
   late bool enCurso;
-  late int turno;
+  late int turno, sentido;
 
   Partida() {
     cartasMesa = [];
@@ -14,20 +14,27 @@ class Partida {
     cartasRobar.shuffle();
     enCurso = false;
     turno = 0;
+    sentido = 1;
   }
 
   Partida.fromFirestore(Map<String, dynamic> data)
       : cartasMesa = (data['cartasMesa'] as List).cast<String>(),
         cartasRobar = (data['cartasRobar'] as List).cast<String>(),
         enCurso = data['enCurso'],
-        turno = data['turno'];
+        turno = data['turno'],
+        sentido = data['sentido'];
 
   Map<String, dynamic> toFirestore() => {
         'cartasMesa': cartasMesa,
         'cartasRobar': cartasRobar,
         'enCurso': enCurso,
-        'turno': turno
+        'turno': turno,
+        'sentido': sentido
       };
+
+  void cambioSentido() {
+    sentido = -sentido;
+  }
 }
 
 Stream<DocumentSnapshot<Partida>> partidaSnapshots(String id) {
@@ -40,8 +47,6 @@ Stream<DocumentSnapshot<Partida>> partidaSnapshots(String id) {
       )
       .snapshots();
 }
-
-
 
 
   // void eliminarJugador(int i) => jugadores.removeAt(i);

@@ -141,7 +141,6 @@ class PantallaJuego extends StatelessWidget {
                                   onPressed: partida.turno % jugadores.length ==
                                           yo.orden
                                       ? () {
-                                          // TODO: Actualizar turno y cartas
                                           yo.addCarta(
                                               partida.cartasRobar.first);
                                           collectionJugadores
@@ -152,7 +151,8 @@ class PantallaJuego extends StatelessWidget {
                                               .catchError((error) => debugPrint(
                                                   "Failed to update yo: $error"));
                                           partida.cartasRobar.removeAt(0);
-                                          partida.turno++;
+                                          partida.turno =
+                                              partida.turno + partida.sentido;
                                           docPartida
                                               .update(partida.toFirestore())
                                               .then((value) =>
@@ -179,8 +179,13 @@ class PantallaJuego extends StatelessWidget {
                               // TODO: Actualizar turno y cartas
                               if (codigo[0] == partida.cartasMesa.last[0] ||
                                   codigo[1] == partida.cartasMesa.last[1]) {
+                                if (codigo[1] == '%') partida.cambioSentido();
+                                if (codigo[1] == '#') {
+                                  partida.turno =
+                                      partida.turno + partida.sentido;
+                                }
                                 partida.cartasMesa.add(codigo);
-                                partida.turno++;
+                                partida.turno = partida.turno + partida.sentido;
                                 docPartida
                                     .update(partida.toFirestore())
                                     .then((value) =>
