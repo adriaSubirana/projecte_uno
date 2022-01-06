@@ -34,7 +34,7 @@ class Carta extends StatelessWidget {
             elevation: 20.0,
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(6),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
