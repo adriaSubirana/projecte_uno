@@ -80,10 +80,13 @@ class Carta extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 16),
-                          child: cardSymbol(codigo, Colors.white),
+                        child: RotationTransition(
+                          turns: const AlwaysStoppedAnimation(180 / 360),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: cardSymbol(codigo, Colors.white),
+                          ),
                         ),
                       ),
                     ],
@@ -293,6 +296,18 @@ Widget cardSymbol(String s, Color c) {
             ),
           ),
         ),
+      ),
+    );
+  } else if (s[1] == '6' || s[1] == '9') {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        s[1],
+        style: TextStyle(
+            color: c,
+            fontWeight: FontWeight.bold,
+            fontSize: size,
+            decoration: TextDecoration.underline),
       ),
     );
   } else {

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
@@ -39,7 +37,7 @@ class PantallaJuego extends StatelessWidget {
           final partida = doc.data();
           final docPartida =
               FirebaseFirestore.instance.collection("/Partidas").doc(_id);
-          if (partida == null) return Text("Esta partida no existe");
+          if (partida == null) return const Text("Esta partida no existe");
 
           // Si només queda una carta en cartasRobar,
           // host posa les de cartasMesa a cartasRobar menys la ultima i shuffle
@@ -69,30 +67,46 @@ class PantallaJuego extends StatelessWidget {
                   )
                   .toList();
 
-              if (jugadores.isEmpty) return Text("No hay jugadores");
+              if (jugadores.isEmpty) return const Text("No hay jugadores");
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
               final otros = jugadores.where((j) => j.nombre != _nombre);
               final collectionJugadores = FirebaseFirestore.instance
                   .collection("/Partidas/$_id/Jugadores");
 
-              // Si tiene que tomar alguna, toma y pasa turno
+              // Si tiene que tomar alguna: toma, pone tomar a 0 y pasa turno
               if (partida.tomar != 0) {
                 for (int i = 0; i < partida.tomar; i++) {
                   yo.addCarta(partida.robar());
                 }
                 collectionJugadores.doc(yo.id).update(yo.toFirestore());
+                partida.tomar = 0;
                 partida.turno = partida.turno + partida.sentido;
                 docPartida.update(partida.toFirestore());
               }
 
+              // El host cambia orden de cada jugador si alguien se va
+              var b = false;
+              for (final j in jugadores) {
+                if (j.orden >= jugadores.length) b = true;
+              }
+              if (b && _host) {
+                jugadores.shuffle();
+                var i = 0;
+                for (final j in jugadores) {
+                  j.orden = i;
+                  i++;
+                  collectionJugadores.doc(j.id).update(j.toFirestore());
+                }
+              }
+
               return Container(
                 decoration: partida.turno % jugadores.length == yo.orden
-                    ? BoxDecoration(
+                    ? const BoxDecoration(
                         boxShadow: [
-                          const BoxShadow(
+                          BoxShadow(
                             color: Colors.yellow,
                           ),
-                          const BoxShadow(
+                          BoxShadow(
                             color: Color(0xFF515151),
                             spreadRadius: -6,
                             blurRadius: 6,
@@ -114,7 +128,6 @@ class PantallaJuego extends StatelessWidget {
                               } else {
                                 // Si abandona no host,
                                 // pasar totes les cartes del jugador a cartasRobar i
-                                // TODO: cambiar orden de cada jugador
                                 for (final c in yo.cartas) {
                                   partida.cartasRobar.add(c);
                                 }
@@ -125,7 +138,8 @@ class PantallaJuego extends StatelessWidget {
                               Navigator.pop(context);
                             },
                             then: () {
-                              // TODO: si abandones retorna false i ha de tornar a /login però si s'acaba la partida torna a /espera
+                              // TODO: si abandonas retorna false i tiene que volver hasta /login
+                              // pero si se acaba la partida retorna true y vuelve a /espera
                               Navigator.pop(context, false);
                             },
                           ),
@@ -139,7 +153,7 @@ class PantallaJuego extends StatelessWidget {
                               partida.turno % jugadores.length == yo.orden
                                   ? "Tu turno"
                                   : "Turno de ${jugadores.where((j) => j.orden == partida.turno % jugadores.length).first.nombre}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white70,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -177,9 +191,9 @@ class PantallaJuego extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Spacer(),
+                                const Spacer(),
                                 Uno(j1: yo),
-                                Spacer(),
+                                const Spacer(),
                                 Robar(
                                   partida: partida,
                                   onPressed: partida.turno % jugadores.length ==
@@ -196,7 +210,7 @@ class PantallaJuego extends StatelessWidget {
                                         }
                                       : null,
                                 ),
-                                Spacer(),
+                                const Spacer(),
                               ],
                             ),
                           ],
@@ -210,14 +224,22 @@ class PantallaJuego extends StatelessWidget {
                           cartas: yo.cartas,
                           onPressed: (codigo) {
                             if (partida.turno % jugadores.length == yo.orden) {
-                              // TODO: Actualizar turno y cartas
                               if (codigo[0] == partida.cartasMesa.last[0] ||
                                   codigo[1] == partida.cartasMesa.last[1] ||
+                                  codigo[0] == 'k' ||
                                   codigo[0] == partida.color) {
                                 if (codigo[1] == '%') partida.cambioSentido();
                                 if (codigo[1] == '#') {
                                   partida.turno =
                                       partida.turno + partida.sentido;
+                                }
+                                if (codigo[0] == 'k') {
+                                  if (codigo[1] == '€') partida.tomar = 4;
+                                  // TODO: Show dialog para escoger color
+                                  docPartida.update(partida.toFirestore());
+                                } else if (codigo[1] == '€') {
+                                  partida.tomar = 2;
+                                  docPartida.update(partida.toFirestore());
                                 }
 
                                 partida.cartasMesa.add(codigo);
