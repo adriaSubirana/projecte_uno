@@ -158,7 +158,7 @@ class PantallaJuego extends StatelessWidget {
                         ),
                       ],
                     ),
-                    barrajugador(
+                    BarraJugador(
                         jugadores: otros,
                         turno: partida.turno % jugadores.length),
                     Expanded(
@@ -182,7 +182,7 @@ class PantallaJuego extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                child: CartaMesa(carta: partida.cartasMesa),
+                                child: CartaMesa(cartas: partida.cartasMesa),
                               ),
                             ),
                             Column(

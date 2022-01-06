@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
-import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

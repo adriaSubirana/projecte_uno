@@ -20,7 +20,6 @@ class _UnoState extends State<Uno> {
     _estado = widget.j1.uno;
   }
 
-  // ignore: non_constant_identifier_names
   void _unoPulsado() {
     setState(() {
       if (widget.j1.cartas.length == 1) {
@@ -36,46 +35,48 @@ class _UnoState extends State<Uno> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(12),
-        child: GestureDetector(
-            onLongPress: () {
-              setState(() {
-                if (_estado == true) {
-                  _pulsado = true;
-                } else {
-                  _pulsado = false;
-                }
-              });
-            },
-            onLongPressUp: () {
-              setState(() {
-                _pulsado = false;
-              });
-            },
-            child: ElevatedButton(
-              onPressed: () {
-                _unoPulsado();
-              },
-              child: const Text(
-                "UNO",
-                style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 3),
-                        blurRadius: 3,
-                      )
-                    ],
-                    fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: _pulsado ? Colors.red : Colors.blue,
-                padding: const EdgeInsets.all(12),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-            )));
+      padding: const EdgeInsets.all(12),
+      child: GestureDetector(
+        onLongPress: () {
+          setState(() {
+            if (_estado == true) {
+              _pulsado = true;
+            } else {
+              _pulsado = false;
+            }
+          });
+        },
+        onLongPressUp: () {
+          setState(() {
+            _pulsado = false;
+          });
+        },
+        child: ElevatedButton(
+          onPressed: () {
+            _unoPulsado();
+          },
+          child: const Text(
+            "UNO",
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 20,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(0, 3),
+                    blurRadius: 3,
+                  )
+                ],
+                fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: _pulsado ? Colors.red : Colors.blue,
+            padding: const EdgeInsets.all(12),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+        ),
+      ),
+    );
   }
 }

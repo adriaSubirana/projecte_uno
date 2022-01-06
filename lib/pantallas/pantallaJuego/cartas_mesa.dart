@@ -1,22 +1,18 @@
-// ignore_for_file: file_names, sized_box_for_whitespace, prefer_const_constructors, unused_import, must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:projecte_uno/clases/jugador.dart';
-import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/carta.dart';
 
 late String cartamesaActualizada;
 
 class CartaMesa extends StatelessWidget {
-  late List<String> carta;
-  late String ultcarta = carta.last;
+  final List<String> cartas;
 
-  CartaMesa({
+  const CartaMesa({
     Key? key,
-    required this.carta,
+    required this.cartas,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Carta(codigo: ultcarta);
+    return Carta(codigo: cartas.last);
   }
 }

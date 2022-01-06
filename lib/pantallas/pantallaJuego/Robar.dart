@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/partida.dart';
-import 'package:projecte_uno/clases/jugador.dart';
 
 class Robar extends StatefulWidget {
   final Partida partida;
