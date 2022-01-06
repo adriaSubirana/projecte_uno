@@ -47,7 +47,7 @@ Widget cardSymbol(String s, Color c) {
     // TODO: Simbolo cambio de color
   } else {
     return Text(
-      s[1],
+      " ${s[1]} ",
       style: TextStyle(
         color: c,
         fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class Carta extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 24),
+                                vertical: 16, horizontal: 16),
                             child: cardSymbol(codigo, Colors.white)),
                       ),
                       Padding(
@@ -132,7 +132,7 @@ class Carta extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 24),
+                                vertical: 16, horizontal: 16),
                             child: cardSymbol(codigo, Colors.white)),
                       ),
                     ],
