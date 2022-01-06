@@ -63,6 +63,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     }
+
                     final jugadorSnaps = snapshot.data!.docs;
                     final jugadores = jugadorSnaps
                         .map(
@@ -76,7 +77,10 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           for (int i = 0; i < jugadores.length; i++)
-                            JugadorEnJuego(jugadores: jugadores, i: i),
+                            JugadorEnJuego(
+                                jugadores: jugadores,
+                                i: i,
+                                hostEspera: _infoJugador[2]),
                         ],
                       ),
                     );
@@ -193,10 +197,12 @@ class JugadorEnJuego extends StatelessWidget {
     Key? key,
     required this.jugadores,
     required this.i,
+    required this.hostEspera,
   }) : super(key: key);
 
   final List<Jugador> jugadores;
   final int i;
+  final bool hostEspera;
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +237,7 @@ class JugadorEnJuego extends StatelessWidget {
               ),
             ),
             color: Colors.green[700],
-            onPressed: () {},
+            onPressed: hostEspera == true ? () {} : null,
             splashColor: Colors.red[900],
           ),
         ],
