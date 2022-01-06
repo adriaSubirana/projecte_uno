@@ -115,7 +115,6 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         onPressed: () {
                           _crearPulsado();
-                          Navigator.of(context).pushNamed('/espera');
                         },
                         child: const Text(
                           "Crear",

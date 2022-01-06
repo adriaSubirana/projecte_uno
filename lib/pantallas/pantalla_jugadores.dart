@@ -91,7 +91,8 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
               child: Container(
                 child: Text(_infoJugador[1]),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white54),
+                  border: Border.all(
+                      color: _infoJugador[2] ? Colors.red : Colors.blue),
                 ),
               ),
             ),
