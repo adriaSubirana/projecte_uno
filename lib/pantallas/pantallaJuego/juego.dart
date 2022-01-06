@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
@@ -50,6 +52,11 @@ class PantallaJuego extends StatelessWidget {
             docPartida.update(partida.toFirestore());
           }
 
+          if (partida.cartasMesa.last[0] != 'k') {
+            partida.color = "";
+            docPartida.update(partida.toFirestore());
+          }
+
           return StreamBuilder(
             stream: jugadorsSnapshots(_id),
             builder: (
@@ -72,17 +79,6 @@ class PantallaJuego extends StatelessWidget {
               final otros = jugadores.where((j) => j.nombre != _nombre);
               final collectionJugadores = FirebaseFirestore.instance
                   .collection("/Partidas/$_id/Jugadores");
-
-              // Si tiene que tomar alguna: toma, pone tomar a 0 y pasa turno
-              if (partida.tomar != 0) {
-                for (int i = 0; i < partida.tomar; i++) {
-                  yo.addCarta(partida.robar());
-                }
-                collectionJugadores.doc(yo.id).update(yo.toFirestore());
-                partida.tomar = 0;
-                partida.turno = partida.turno + partida.sentido;
-                docPartida.update(partida.toFirestore());
-              }
 
               // El host cambia orden de cada jugador si alguien se va
               var b = false;
@@ -127,7 +123,7 @@ class PantallaJuego extends StatelessWidget {
                                 docPartida.delete();
                               } else {
                                 // Si abandona no host,
-                                // pasar totes les cartes del jugador a cartasRobar i
+                                // pasar totes les cartes del jugador a cartasRobar
                                 for (final c in yo.cartas) {
                                   partida.cartasRobar.add(c);
                                 }
@@ -222,30 +218,187 @@ class PantallaJuego extends StatelessWidget {
                       child: Center(
                         child: CartasMano(
                           cartas: yo.cartas,
-                          onPressed: (codigo) {
+                          onPressed: (codigo) async {
                             if (partida.turno % jugadores.length == yo.orden) {
                               if (codigo[0] == partida.cartasMesa.last[0] ||
                                   codigo[1] == partida.cartasMesa.last[1] ||
                                   codigo[0] == 'k' ||
                                   codigo[0] == partida.color) {
+                                partida.cartasMesa.add(codigo);
+                                yo.cartas.remove(codigo);
+
                                 if (codigo[1] == '%') partida.cambioSentido();
                                 if (codigo[1] == '#') {
                                   partida.turno =
                                       partida.turno + partida.sentido;
                                 }
                                 if (codigo[0] == 'k') {
-                                  if (codigo[1] == '€') partida.tomar = 4;
-                                  // TODO: Show dialog para escoger color
-                                  docPartida.update(partida.toFirestore());
-                                } else if (codigo[1] == '€') {
-                                  partida.tomar = 2;
-                                  docPartida.update(partida.toFirestore());
+                                  if (codigo[1] == '€') {
+                                    // Si quedan 4 cartas o menos se renuevan
+                                    if (partida.cartasRobar.length <= 4) {
+                                      for (int i =
+                                              partida.cartasMesa.length - 2;
+                                          i >= 0;
+                                          i--) {
+                                        partida.cartasRobar
+                                            .add(partida.cartasMesa[i]);
+                                      }
+                                      partida.cartasMesa.removeRange(
+                                          0, partida.cartasMesa.length - 1);
+                                      partida.cartasRobar.shuffle();
+                                    }
+                                    partida.turno =
+                                        partida.turno + partida.sentido;
+                                    for (int i = 0; i < 4; i++) {
+                                      jugadores[
+                                              partida.turno % jugadores.length]
+                                          .addCarta(partida.robar());
+                                    }
+                                    collectionJugadores
+                                        .doc(jugadores[partida.turno %
+                                                jugadores.length]
+                                            .id)
+                                        .update(jugadores[partida.turno %
+                                                jugadores.length]
+                                            .toFirestore());
+                                  }
+                                  // Show dialog para escoger color
+                                  await showDialog<String>(
+                                    context: context,
+                                    builder: (context) {
+                                      return Center(
+                                        child: SimpleDialog(
+                                          backgroundColor:
+                                              const Color(0xFF515151),
+                                          title: const Text(
+                                            "Escoge color",
+                                            style: TextStyle(
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'r');
+                                                      },
+                                                      child: const Card(
+                                                        color: Colors.red,
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width: 80,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'b');
+                                                      },
+                                                      child: const Card(
+                                                        color: Colors.blue,
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width: 80,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'y');
+                                                      },
+                                                      child: const Card(
+                                                        color: Colors.amber,
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width: 80,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'g');
+                                                      },
+                                                      child: const Card(
+                                                        color: Colors.green,
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width: 80,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) {
+                                    if (value == null) {
+                                      switch (Random().nextInt(3)) {
+                                        case 0:
+                                          partida.color = 'r';
+                                          break;
+                                        case 1:
+                                          partida.color = 'b';
+                                          break;
+                                        case 2:
+                                          partida.color = 'y';
+                                          break;
+                                        case 3:
+                                          partida.color = 'g';
+                                          break;
+                                      }
+                                    } else {
+                                      partida.color = value;
+                                    }
+                                  });
+                                } else {
+                                  if (codigo[1] == '€') {
+                                    // Si quedan 2 cartas o menos se renuevan
+                                    if (partida.cartasRobar.length <= 2) {
+                                      for (int i =
+                                              partida.cartasMesa.length - 2;
+                                          i >= 0;
+                                          i--) {
+                                        partida.cartasRobar
+                                            .add(partida.cartasMesa[i]);
+                                      }
+                                      partida.cartasMesa.removeRange(
+                                          0, partida.cartasMesa.length - 1);
+                                      partida.cartasRobar.shuffle();
+                                    }
+                                    partida.turno =
+                                        partida.turno + partida.sentido;
+                                    for (int i = 0; i < 2; i++) {
+                                      jugadores[
+                                              partida.turno % jugadores.length]
+                                          .addCarta(partida.robar());
+                                    }
+                                    collectionJugadores
+                                        .doc(jugadores[partida.turno %
+                                                jugadores.length]
+                                            .id)
+                                        .update(jugadores[partida.turno %
+                                                jugadores.length]
+                                            .toFirestore());
+                                  }
                                 }
 
-                                partida.cartasMesa.add(codigo);
                                 partida.turno = partida.turno + partida.sentido;
                                 docPartida.update(partida.toFirestore());
-                                yo.cartas.remove(codigo);
                                 collectionJugadores
                                     .doc(yo.id)
                                     .update(yo.toFirestore());

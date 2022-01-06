@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projecte_uno/clases/baraja_uno.dart';
 
@@ -8,7 +6,6 @@ class Partida {
   late bool enCurso;
   late int turno, sentido;
   late String color;
-  late int tomar;
 
   Partida() {
     cartasMesa = [];
@@ -18,7 +15,6 @@ class Partida {
     turno = 0;
     sentido = 1;
     color = '';
-    tomar = 0;
   }
 
   Partida.fromFirestore(Map<String, dynamic> data)
@@ -27,8 +23,7 @@ class Partida {
         enCurso = data['enCurso'],
         turno = data['turno'],
         sentido = data['sentido'],
-        color = data['color'],
-        tomar = data['tomar'];
+        color = data['color'];
 
   Map<String, dynamic> toFirestore() => {
         'cartasMesa': cartasMesa,
@@ -37,7 +32,6 @@ class Partida {
         'turno': turno,
         'sentido': sentido,
         'color': color,
-        'tomar': tomar
       };
 
   void cambioSentido() {
