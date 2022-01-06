@@ -9,7 +9,7 @@ const Map<String, Color> cardColor = {
 };
 
 Widget cardSymbol(String s, Color c) {
-  final double size = c == Colors.white ? 48 : 112;
+  final double size = c == Colors.white ? 56 : 112;
   if (s[1] == '#') {
     return Icon(
       Icons.not_interested,
@@ -106,11 +106,11 @@ class Carta extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: Center(
                           child: RotationTransition(
-                            turns: const AlwaysStoppedAnimation(45 / 360),
+                            turns: const AlwaysStoppedAnimation(40 / 360),
                             child: ClipOval(
                               child: Container(
                                 height: 320,
-                                width: 180,
+                                width: 195,
                                 decoration: const BoxDecoration(
                                   //shape: BoxShape.circle,
                                   color: Colors.white,
@@ -118,7 +118,7 @@ class Carta extends StatelessWidget {
                                 child: Center(
                                   child: RotationTransition(
                                     turns:
-                                        const AlwaysStoppedAnimation(-45 / 360),
+                                        const AlwaysStoppedAnimation(-40 / 360),
                                     child: cardSymbol(
                                         codigo, cardColor[codigo[0]]!),
                                   ),
