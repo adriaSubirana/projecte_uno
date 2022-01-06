@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/juego.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class PantallaJugadores extends StatefulWidget {
   const PantallaJugadores({Key? key}) : super(key: key);
@@ -93,7 +94,13 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
             flex: 6,
             child: Center(
               child: Container(
-                child: Text(_infoJugador[1]),
+                child: Center(
+                  child: QrImage(
+                    data: 'stringaso',
+                    version: QrVersions.auto,
+                    size: 220,
+                  ),
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white54),
                 ),
