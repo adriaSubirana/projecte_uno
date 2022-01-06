@@ -102,7 +102,8 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                   ),
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white54),
+                  border: Border.all(
+                      color: _infoJugador[2] ? Colors.red : Colors.blue),
                 ),
               ),
             ),
