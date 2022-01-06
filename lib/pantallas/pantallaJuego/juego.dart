@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/carta.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mesa.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mano.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/robar.dart';
@@ -39,6 +40,18 @@ class PantallaJuego extends StatelessWidget {
           final docPartida =
               FirebaseFirestore.instance.collection("/Partidas").doc(_id);
           if (partida == null) return Text("Esta partida no existe");
+
+          // Si només queda una carta en cartasRobar,
+          // host posa les de cartasMesa a cartasRobar menys la ultima i shuffle
+          if (partida.cartasRobar.length <= 1 && _host) {
+            for (int i = partida.cartasMesa.length - 2; i >= 0; i--) {
+              partida.cartasRobar.add(partida.cartasMesa[i]);
+            }
+            partida.cartasMesa.removeRange(0, partida.cartasMesa.length - 1);
+            partida.cartasRobar.shuffle();
+            docPartida.update(partida.toFirestore());
+          }
+
           return StreamBuilder(
             stream: jugadorsSnapshots(_id),
             builder: (
@@ -61,6 +74,16 @@ class PantallaJuego extends StatelessWidget {
               final otros = jugadores.where((j) => j.nombre != _nombre);
               final collectionJugadores = FirebaseFirestore.instance
                   .collection("/Partidas/$_id/Jugadores");
+
+              // Si tiene que tomar alguna, toma y pasa turno
+              if (partida.tomar != 0) {
+                for (int i = 0; i < partida.tomar; i++) {
+                  yo.addCarta(partida.robar());
+                }
+                collectionJugadores.doc(yo.id).update(yo.toFirestore());
+                partida.turno = partida.turno + partida.sentido;
+                docPartida.update(partida.toFirestore());
+              }
 
               return Container(
                 decoration: partida.turno % jugadores.length == yo.orden
@@ -89,7 +112,14 @@ class PantallaJuego extends StatelessWidget {
                               if (_host) {
                                 docPartida.delete();
                               } else {
-                                // TODO: Pasar totes les cartes del jugador a cartasRobar
+                                // Si abandona no host,
+                                // pasar totes les cartes del jugador a cartasRobar i
+                                // TODO: cambiar orden de cada jugador
+                                for (final c in yo.cartas) {
+                                  partida.cartasRobar.add(c);
+                                }
+                                partida.cartasRobar.shuffle();
+                                docPartida.update(partida.toFirestore());
                                 collectionJugadores.doc(yo.id).delete();
                               }
                               Navigator.pop(context);
@@ -129,7 +159,21 @@ class PantallaJuego extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                              child: CartaMesa(carta: partida.cartasMesa),
+                              child: Container(
+                                decoration: partida.color == ""
+                                    ? null
+                                    : BoxDecoration(
+                                        borderRadius: BorderRadius.circular(32),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: cardColor[partida.color]!,
+                                            spreadRadius: 8,
+                                            blurRadius: 8,
+                                          )
+                                        ],
+                                      ),
+                                child: CartaMesa(carta: partida.cartasMesa),
+                              ),
                             ),
                             Column(
                               children: [
@@ -141,24 +185,14 @@ class PantallaJuego extends StatelessWidget {
                                   onPressed: partida.turno % jugadores.length ==
                                           yo.orden
                                       ? () {
-                                          yo.addCarta(
-                                              partida.cartasRobar.first);
+                                          yo.addCarta(partida.robar());
                                           collectionJugadores
                                               .doc(yo.id)
-                                              .update(yo.toFirestore())
-                                              .then((value) =>
-                                                  debugPrint("yo updated"))
-                                              .catchError((error) => debugPrint(
-                                                  "Failed to update yo: $error"));
-                                          partida.cartasRobar.removeAt(0);
+                                              .update(yo.toFirestore());
                                           partida.turno =
                                               partida.turno + partida.sentido;
                                           docPartida
-                                              .update(partida.toFirestore())
-                                              .then((value) =>
-                                                  debugPrint("Partida updated"))
-                                              .catchError((error) => debugPrint(
-                                                  "Failed to update partida: $error"));
+                                              .update(partida.toFirestore());
                                         }
                                       : null,
                                 ),
@@ -178,28 +212,21 @@ class PantallaJuego extends StatelessWidget {
                             if (partida.turno % jugadores.length == yo.orden) {
                               // TODO: Actualizar turno y cartas
                               if (codigo[0] == partida.cartasMesa.last[0] ||
-                                  codigo[1] == partida.cartasMesa.last[1]) {
+                                  codigo[1] == partida.cartasMesa.last[1] ||
+                                  codigo[0] == partida.color) {
                                 if (codigo[1] == '%') partida.cambioSentido();
                                 if (codigo[1] == '#') {
                                   partida.turno =
                                       partida.turno + partida.sentido;
                                 }
+
                                 partida.cartasMesa.add(codigo);
                                 partida.turno = partida.turno + partida.sentido;
-                                docPartida
-                                    .update(partida.toFirestore())
-                                    .then((value) =>
-                                        debugPrint("Partida updated"))
-                                    .catchError((error) => debugPrint(
-                                        "Failed to update partida: $error"));
+                                docPartida.update(partida.toFirestore());
                                 yo.cartas.remove(codigo);
                                 collectionJugadores
                                     .doc(yo.id)
-                                    .update(yo.toFirestore())
-                                    .then((value) => debugPrint("yo updated"))
-                                    .catchError((error) => debugPrint(
-                                        "Failed to update yo: $error"));
-                                debugPrint(codigo);
+                                    .update(yo.toFirestore());
                               }
                             } else {
                               null;
