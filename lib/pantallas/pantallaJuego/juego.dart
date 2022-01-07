@@ -41,6 +41,11 @@ class PantallaJuego extends StatelessWidget {
               FirebaseFirestore.instance.collection("/Partidas").doc(_id);
           if (partida == null) return const Text("Esta partida no existe");
 
+          // TODO: implementar enCurso
+          if (partida.enCurso) {
+            debugPrint("Alguien ha ganado");
+          }
+
           // Si només queda una carta en cartasRobar,
           // host posa les de cartasMesa a cartasRobar menys la ultima i shuffle
           if (partida.cartasRobar.length <= 1 && _host) {
@@ -75,6 +80,15 @@ class PantallaJuego extends StatelessWidget {
                   .toList();
 
               if (jugadores.isEmpty) return const Text("No hay jugadores");
+              // TODO: error si tu nombre no coincide
+              bool e = false;
+              for (final j in jugadores) {
+                if (j.nombre == _nombre) e = true;
+              }
+              if (!e) {
+                return const Text("No existes");
+              }
+
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
               final otros = jugadores.where((j) => j.nombre != _nombre);
               final collectionJugadores = FirebaseFirestore.instance
@@ -397,6 +411,10 @@ class PantallaJuego extends StatelessWidget {
                                   }
                                 }
 
+                                // Cuando te quedas sin cartas has ganado y la partida acaba
+                                if (yo.cartas.isEmpty) {
+                                  partida.enCurso = false;
+                                }
                                 partida.turno = partida.turno + partida.sentido;
                                 docPartida.update(partida.toFirestore());
                                 collectionJugadores
