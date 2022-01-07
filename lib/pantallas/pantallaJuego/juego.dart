@@ -35,6 +35,7 @@ class PantallaJuego extends StatelessWidget {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
+          // TODO: implementar enCurso
           final doc = snapshot.data!;
           final partida = doc.data();
           final docPartida =
@@ -75,6 +76,7 @@ class PantallaJuego extends StatelessWidget {
                   .toList();
 
               if (jugadores.isEmpty) return const Text("No hay jugadores");
+              // TODO: error si tu nombre no coincide
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
               final otros = jugadores.where((j) => j.nombre != _nombre);
               final collectionJugadores = FirebaseFirestore.instance
