@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/espera': (context) => const PantallaJugadores(),
         '/juego': (context) => const PantallaJuego(),
       },
+      //ffff
     );
   }
 }
