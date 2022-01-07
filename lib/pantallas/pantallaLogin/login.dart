@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String? _qrCode;
   late TextEditingController _controller;
   late List<dynamic> _jugadorInfo;
 
@@ -60,6 +64,27 @@ class _LoginState extends State<Login> {
       _jugadorInfo[0] = _controller.text;
       _jugadorInfo[2] = false;
     });
+  }
+
+  Future<void> qrScan() async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+      if (!mounted) return;
+      setState(() {
+        _qrCode = qrCode;
+      });
+
+      if (_qrCode != '-1')
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => PantallaJugadores()));
+    } on PlatformException {
+      _qrCode = "Fail";
+    }
   }
 
   @override
@@ -146,6 +171,7 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         onPressed: () {
                           _unirsePulsado();
+                          qrScan();
                         },
                         child: const Text(
                           "Unirse",

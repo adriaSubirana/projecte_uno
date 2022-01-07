@@ -96,7 +96,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
               child: Container(
                 child: Center(
                   child: QrImage(
-                    data: 'stringaso',
+                    data: _infoJugador[1],
                     version: QrVersions.auto,
                     size: 220,
                   ),
