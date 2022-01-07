@@ -13,7 +13,6 @@ class PantallaJugadores extends StatefulWidget {
 
 class _PantallaJugadoresState extends State<PantallaJugadores> {
   late final List<dynamic> _infoJugador;
-  late String idjugador;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,6 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                 ),
               ),
             ),
-<<<<<<< HEAD
             Expanded(
               flex: 6,
               child: Padding(
@@ -81,22 +79,9 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                           JugadorEnJuego(
                               jugadores: jugadores,
                               i: i,
-                              hostEspera: _infoJugador[2],
-                              idpartida: _infoJugador[1]),
+                              hostEspera: _infoJugador[2]),
                       ],
                     ),
-=======
-          ),
-          Expanded(
-            flex: 6,
-            child: Center(
-              child: Container(
-                child: Center(
-                  child: QrImage(
-                    data: _infoJugador[1],
-                    version: QrVersions.auto,
-                    size: 220,
->>>>>>> 7c8f6816e9c1b8c5e8bd933bf262ac8dd7ca5ffb
                   ),
                 ),
               ),
@@ -107,7 +92,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                 child: Container(
                   child: Center(
                     child: QrImage(
-                      data: 'stringaso',
+                      data: _infoJugador[1],
                       version: QrVersions.auto,
                       size: 220,
                     ),
@@ -219,13 +204,11 @@ class JugadorEnJuego extends StatelessWidget {
     required this.jugadores,
     required this.i,
     required this.hostEspera,
-    required this.idpartida,
   }) : super(key: key);
 
   final List<Jugador> jugadores;
   final int i;
   final bool hostEspera;
-  final String idpartida;
 
   @override
   Widget build(BuildContext context) {
@@ -260,14 +243,7 @@ class JugadorEnJuego extends StatelessWidget {
               ),
             ),
             color: Colors.green[700],
-            onPressed: hostEspera == true
-                ? () {
-                    FirebaseFirestore.instance
-                        .doc(
-                            "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
-                        .delete();
-                  }
-                : null,
+            onPressed: hostEspera == true ? () {} : null,
             splashColor: Colors.red[900],
           ),
         ],

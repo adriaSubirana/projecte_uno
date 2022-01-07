@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late TextEditingController _controller;
   late List<dynamic> _jugadorInfo;
+  late var _qrCode;
 
   @override
   void initState() {
@@ -60,8 +63,6 @@ class _LoginState extends State<Login> {
       _jugadorInfo[0] = _controller.text;
       _jugadorInfo[2] = false;
     });
-<<<<<<< HEAD
-=======
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -79,7 +80,6 @@ class _LoginState extends State<Login> {
     } on PlatformException {
       _qrCode = "Fail";
     }
->>>>>>> 460397cf1974b88b9614298104cf788c6af73243
   }
 
   @override
