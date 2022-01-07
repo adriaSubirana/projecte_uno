@@ -58,15 +58,12 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _unirsePulsado() {
+  Future<void> _unirsePulsado() async {
     debugPrint(_controller.text + " no host");
     setState(() {
       _jugadorInfo[0] = _controller.text;
       _jugadorInfo[2] = false;
     });
-  }
-
-  Future<void> qrScan() async {
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -80,8 +77,7 @@ class _LoginState extends State<Login> {
       });
 
       if (_qrCode != '-1')
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => PantallaJugadores()));
+        Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
     } on PlatformException {
       _qrCode = "Fail";
     }
@@ -171,7 +167,6 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         onPressed: () {
                           _unirsePulsado();
-                          qrScan();
                         },
                         child: const Text(
                           "Unirse",
