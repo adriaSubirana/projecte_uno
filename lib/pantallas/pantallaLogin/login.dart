@@ -54,12 +54,32 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _unirsePulsado() {
+  Future<void> _unirsePulsado() async {
     debugPrint(_controller.text + " no host");
     setState(() {
       _jugadorInfo[0] = _controller.text;
       _jugadorInfo[2] = false;
     });
+<<<<<<< HEAD
+=======
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+      if (!mounted) return;
+      setState(() {
+        _qrCode = qrCode;
+      });
+
+      if (_qrCode != '-1')
+        Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
+    } on PlatformException {
+      _qrCode = "Fail";
+    }
+>>>>>>> 460397cf1974b88b9614298104cf788c6af73243
   }
 
   @override
