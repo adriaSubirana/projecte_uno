@@ -63,6 +63,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                 ),
               ),
             ),
+<<<<<<< HEAD
             Expanded(
               flex: 6,
               child: Padding(
@@ -84,6 +85,18 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                               idpartida: _infoJugador[1]),
                       ],
                     ),
+=======
+          ),
+          Expanded(
+            flex: 6,
+            child: Center(
+              child: Container(
+                child: Center(
+                  child: QrImage(
+                    data: _infoJugador[1],
+                    version: QrVersions.auto,
+                    size: 220,
+>>>>>>> 7c8f6816e9c1b8c5e8bd933bf262ac8dd7ca5ffb
                   ),
                 ),
               ),
