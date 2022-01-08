@@ -250,10 +250,35 @@ class JugadorEnJuego extends StatelessWidget {
             color: Colors.green[700],
             onPressed: hostEspera == true
                 ? () {
-                    FirebaseFirestore.instance
-                        .doc(
-                            "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
-                        .delete();
+                    showDialog<bool>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Eliminar"),
+                            content: const Text(
+                                "Seguro que deseas eliminar al jugador ?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text("Cancelar"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  FirebaseFirestore.instance
+                                      .doc(
+                                          "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
+                                      .delete();
+                                  Navigator.pop(context, true);
+                                },
+                                child: const Text("Eliminar jugador"),
+                              ),
+                            ],
+                          );
+                        }).then((value) {
+                      if (value != null && value) {
+                        Navigator.of(context).pop(true);
+                      }
+                    });
                   }
                 : null,
             splashColor: Colors.red[900],
