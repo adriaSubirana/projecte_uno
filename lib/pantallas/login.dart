@@ -72,16 +72,12 @@ class _LoginState extends State<Login> {
       );
       if (!mounted) return;
       setState(() {
-        _qrCode = qrCode;
-      });
-
-      if (_qrCode != '-1') {
         final j = Jugador(_controller.text);
         final docSnap = FirebaseFirestore.instance
             .collection('/Partidas${_qrCode}/Jugadores');
         addJugador(docSnap.id, j);
         Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
-      }
+      });
     } on PlatformException {
       _qrCode = "Fail";
     }
