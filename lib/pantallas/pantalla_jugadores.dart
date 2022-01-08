@@ -238,6 +238,20 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                       ),
                       color: Colors.red[900],
                       onPressed: () {
+                        for (final j in jugadores) {
+                          if (j.nombre == _infoJugador[0] &&
+                              _infoJugador[2] == true) {
+                            // partida.enCurso = true;
+                            for (int i = 0; i < jugadores.length; i++) {
+                              jugadores[i].orden = i;
+                              for (int j = 0; j < 7; j++) {
+                                //   jugadores[i].addCarta(partida.robar());
+                              }
+                            }
+                          }
+                        }
+
+                        //if (partida.enCurso == true) {
                         Navigator.of(context)
                             .pushNamed('/juego', arguments: _infoJugador)
                             .then((value) {
@@ -249,6 +263,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                           }
                         });
                       },
+                      // },
                       splashColor: Colors.yellow,
                     )
                   ],
