@@ -11,6 +11,7 @@ class PantallaJugadores extends StatefulWidget {
   _PantallaJugadoresState createState() => _PantallaJugadoresState();
 }
 
+//Texto conflict
 class _PantallaJugadoresState extends State<PantallaJugadores> {
   late final List<dynamic> _infoJugador;
   late String idjugador;
@@ -250,6 +251,7 @@ class JugadorEnJuego extends StatelessWidget {
             color: Colors.green[700],
             onPressed: hostEspera == true
                 ? () {
+<<<<<<< HEAD
                     showDialog<bool>(
                         context: context,
                         builder: (context) {
@@ -279,6 +281,12 @@ class JugadorEnJuego extends StatelessWidget {
                         Navigator.of(context).pop(true);
                       }
                     });
+=======
+                    FirebaseFirestore.instance
+                        .doc(
+                            "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
+                        .delete();
+>>>>>>> 848ff73b1dc294c1763c1455693735cc5269b036
                   }
                 : null,
             splashColor: Colors.red[900],
