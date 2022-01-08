@@ -182,51 +182,70 @@ class PantallaGanador extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "FIN DE LA PARTIDA",
+                      Text(
+                        ganador.nombre == _nombre
+                            ? "FELICIDADES"
+                            : "FIN DE LA PARTIDA",
                         style: TextStyle(
                             color: Colors.white70,
-                            fontSize: 32,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 75),
                       Container(
                         decoration: BoxDecoration(
+                          color: Colors.grey[800],
                           borderRadius: BorderRadius.circular(48),
                           boxShadow: const [
                             BoxShadow(
-                              color: Colors.lime,
-                              spreadRadius: 10,
-                              blurRadius: 10,
+                              color: Colors.pink,
+                              spreadRadius: 20,
+                              blurRadius: 20,
                             ),
-                            BoxShadow(
-                              color: Color(0xFF515151),
-                              spreadRadius: -10,
-                              blurRadius: 10,
-                            )
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(48),
-                          child: Column(
+                          padding: const EdgeInsets.fromLTRB(30, 48, 30, 48),
+                          child: Row(
                             children: [
-                              Icon(Icons.person,
-                                  color: Colors.white.withAlpha(200),
-                                  size: 100),
-                              Text(
-                                ganador.nombre == _nombre
-                                    ? "Has Ganado!"
-                                    : "${ganador.nombre} ha ganado!",
-                                style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600),
+                              Image.network(
+                                "https://webris.org/wp-content/uploads/2019/01/giphy.gif",
+                                height: 75,
+                                width: 75,
                               ),
+                              Column(
+                                children: [
+                                  Icon(Icons.person,
+                                      color: Colors.white.withAlpha(200),
+                                      size: 100),
+                                  Text(
+                                    ganador.nombre == _nombre
+                                        ? "¡Has Ganado!"
+                                        : "¡${ganador.nombre} ha ganado!",
+                                    style: const TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              //Transform(
+                              //transform: Matrix4.rotationY(3.1415),
+                              Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(3.1415),
+                                child: Image.network(
+                                  "https://webris.org/wp-content/uploads/2019/01/giphy.gif",
+                                  height: 75,
+                                  width: 75,
+                                ),
+                              ),
+                              //),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 75),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context, false);
