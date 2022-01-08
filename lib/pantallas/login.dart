@@ -72,6 +72,7 @@ class _LoginState extends State<Login> {
       );
       if (!mounted) return;
       setState(() {
+        _qrCode = qrCode;
         _jugadorInfo[1] = _qrCode;
         final j = Jugador(_controller.text);
         final docSnap = FirebaseFirestore.instance
