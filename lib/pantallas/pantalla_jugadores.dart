@@ -370,24 +370,22 @@ class JugadorEnJuego extends StatelessWidget {
           MaterialButton(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 7),
-              child: hostEspera == false
-                  ? const Text(
-                      'Eliminar ',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black,
-                              offset: Offset(0, 3),
-                              blurRadius: 2,
-                            )
-                          ],
-                          fontWeight: FontWeight.bold),
-                    )
-                  : null,
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 7),
+              child: Text(
+                'Eliminar ',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 3),
+                        blurRadius: 2,
+                      )
+                    ],
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             color: Colors.green[700],
             onPressed: hostEspera == true && jugadores[i].nombre != hostNombre
