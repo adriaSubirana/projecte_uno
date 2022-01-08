@@ -87,8 +87,9 @@ class PantallaJuego extends StatelessWidget {
             );
           }
 
-          // TODO: implementar enCurso
           if (!partida.enCurso) {
+            //Devolviendo true pantalla jugadores tiene que abrir pantalla ganador
+            Navigator.pop(context, true);
             debugPrint("Alguien ha ganado");
           }
 
