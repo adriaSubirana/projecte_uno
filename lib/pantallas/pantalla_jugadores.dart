@@ -77,7 +77,7 @@ class PantallaJugadores extends StatelessWidget {
             );
           }
 
-          if (partida.enCurso) {
+          /*if (partida.enCurso) {
             Navigator.of(context)
                 .pushNamed('/juego', arguments: _infoJugador)
                 .then((value) {
@@ -88,7 +88,7 @@ class PantallaJugadores extends StatelessWidget {
                 Navigator.pop(context);
               }
             });
-          }
+          }*/
 
           return StreamBuilder(
             stream: jugadorsSnapshots(_infoJugador[1]),
