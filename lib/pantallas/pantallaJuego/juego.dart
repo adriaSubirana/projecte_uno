@@ -13,22 +13,21 @@ import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
-  late String _nombre = 'Eustaquio';
-  late bool _host = true;
-  late String _id = "2WTVdNF7r9Uln6RDy4wT";
+  late String _nombre; // = 'Eustaquio';
+  late bool _host; // = true;
+  late String _id; // = "2WTVdNF7r9Uln6RDy4wT";
 
   PantallaJuego({Key? key}) : super(key: key);
 
-  //Texto para conflict
   @override
   Widget build(BuildContext context) {
-    /*if (ModalRoute.of(context) != null) {
+    if (ModalRoute.of(context) != null) {
       final infoJugador =
           ModalRoute.of(context)!.settings.arguments as List<dynamic>;
       _nombre = infoJugador[0];
       _id = infoJugador[1];
       _host = infoJugador[2];
-    }*/
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
       appBar: AppBar(
@@ -564,4 +563,3 @@ class PantallaJuego extends StatelessWidget {
     );
   }
 }
-// Texto conflict 2
