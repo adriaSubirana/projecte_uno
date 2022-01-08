@@ -282,60 +282,60 @@ class JugadorEnJuego extends StatelessWidget {
             jugadores[i].nombre.toUpperCase(),
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          if (hostEspera == false)
-            MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 7),
-                child: Text(
-                  'Eliminar ',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black,
-                          offset: Offset(0, 3),
-                          blurRadius: 2,
-                        )
-                      ],
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              color: Colors.green[700],
-              onPressed: hostEspera == true
-                  ? () {
-                      showDialog<bool>(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Eliminar"),
-                              content: const Text(
-                                  "Seguro que deseas eliminar al jugador ?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, false),
-                                  child: const Text("Cancelar"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    FirebaseFirestore.instance
-                                        .doc(
-                                            "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
-                                        .delete();
-                                    Navigator.pop(context, true);
-                                  },
-                                  child: const Text("Eliminar jugador"),
-                                ),
-                              ],
-                            );
-                          });
-                    }
+          MaterialButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 7),
+              child: hostEspera == false
+                  ? const Text(
+                      'Eliminar ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(0, 3),
+                              blurRadius: 2,
+                            )
+                          ],
+                          fontWeight: FontWeight.bold),
+                    )
                   : null,
-              splashColor: Colors.red[900],
             ),
+            color: Colors.green[700],
+            onPressed: hostEspera == true
+                ? () {
+                    showDialog<bool>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Eliminar"),
+                            content: const Text(
+                                "Seguro que deseas eliminar al jugador ?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text("Cancelar"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  FirebaseFirestore.instance
+                                      .doc(
+                                          "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
+                                      .delete();
+                                  Navigator.pop(context, true);
+                                },
+                                child: const Text("Eliminar jugador"),
+                              ),
+                            ],
+                          );
+                        });
+                  }
+                : null,
+            splashColor: Colors.red[900],
+          ),
         ],
       ),
     );
