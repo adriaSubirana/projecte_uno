@@ -192,18 +192,21 @@ class PantallaJugadores extends StatelessWidget {
                   Expanded(
                     flex: 6,
                     child: Center(
-                      child: Container(
-                        child: Center(
-                          child: QrImage(
-                            data: _infoJugador[1],
-                            version: QrVersions.auto,
-                            size: 220,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                        child: Container(
+                          child: Center(
+                            child: QrImage(
+                              data: _infoJugador[1],
+                              version: QrVersions.auto,
+                              size: 220,
+                            ),
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color:
-                                  _infoJugador[2] ? Colors.red : Colors.blue),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color:
+                                    _infoJugador[2] ? Colors.red : Colors.blue),
+                          ),
                         ),
                       ),
                     ),
