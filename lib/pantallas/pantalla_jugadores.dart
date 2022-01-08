@@ -13,6 +13,7 @@ class PantallaJugadores extends StatefulWidget {
 
 class _PantallaJugadoresState extends State<PantallaJugadores> {
   late final List<dynamic> _infoJugador;
+  late String idjugador;
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +78,11 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                       children: [
                         for (int i = 0; i < jugadores.length; i++)
                           JugadorEnJuego(
-                              jugadores: jugadores,
-                              i: i,
-                              hostEspera: _infoJugador[2]),
+                            jugadores: jugadores,
+                            i: i,
+                            hostEspera: _infoJugador[2],
+                            idpartida: _infoJugador[1],
+                          ),
                       ],
                     ),
                   ),
@@ -204,11 +207,13 @@ class JugadorEnJuego extends StatelessWidget {
     required this.jugadores,
     required this.i,
     required this.hostEspera,
+    required this.idpartida,
   }) : super(key: key);
 
   final List<Jugador> jugadores;
   final int i;
   final bool hostEspera;
+  final String idpartida;
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +248,14 @@ class JugadorEnJuego extends StatelessWidget {
               ),
             ),
             color: Colors.green[700],
-            onPressed: hostEspera == true ? () {} : null,
+            onPressed: hostEspera == true
+                ? () {
+                    FirebaseFirestore.instance
+                        .doc(
+                            "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
+                        .delete();
+                  }
+                : null,
             splashColor: Colors.red[900],
           ),
         ],
