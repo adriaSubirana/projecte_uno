@@ -234,8 +234,16 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                       ),
                       color: Colors.red[900],
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PantallaJuego()));
+                        Navigator.of(context)
+                            .pushNamed('/juego', arguments: _infoJugador)
+                            .then((value) {
+                          if (value == true) {
+                            Navigator.of(context)
+                                .pushNamed('/ganador', arguments: _infoJugador);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        });
                       },
                       splashColor: Colors.yellow,
                     )
