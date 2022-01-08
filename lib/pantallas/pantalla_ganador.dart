@@ -4,14 +4,21 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 
 class PantallaGanador extends StatelessWidget {
-  late String _nombre = 'Eustaquio';
-  late bool _host = true;
-  late String _id = "2WTVdNF7r9Uln6RDy4wT";
+  late String _nombre; // = 'Eustaquio';
+  late bool _host; // = true;
+  late String _id; // = "2WTVdNF7r9Uln6RDy4wT";
 
   PantallaGanador({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context) != null) {
+      final infoJugador =
+          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+      _nombre = infoJugador[0];
+      _id = infoJugador[1];
+      _host = infoJugador[2];
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
       appBar: AppBar(
@@ -28,8 +35,6 @@ class PantallaGanador extends StatelessWidget {
           }
           final doc = snapshot.data!;
           final partida = doc.data();
-          final docPartida =
-              FirebaseFirestore.instance.collection("/Partidas").doc(_id);
           if (partida == null) {
             return Center(
               child: Padding(
@@ -186,7 +191,7 @@ class PantallaGanador extends StatelessWidget {
                         ganador.nombre == _nombre
                             ? "FELICIDADES"
                             : "FIN DE LA PARTIDA",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 20,
                             fontWeight: FontWeight.w700),

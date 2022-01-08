@@ -273,7 +273,7 @@ class PantallaJuego extends StatelessWidget {
                               Navigator.pop(context);
                             },
                             then: () {
-                              // TODO: si abandonas retorna false i tiene que volver hasta /login
+                              // Ai abandonas retorna false i tiene que volver hasta /login
                               // pero si se acaba la partida retorna true y vuelve a /espera
                               Navigator.pop(context, false);
                             },
