@@ -186,7 +186,11 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: const Text("Abandonar"),
+                                backgroundColor: const Color(0xFF515151),
+                                title: const Text(
+                                  "Abandonar",
+                                  style: TextStyle(color: Colors.white70),
+                                ),
                                 content: const Text(
                                     "Seguro que quieres abandonar la partida?"),
                                 actions: [
