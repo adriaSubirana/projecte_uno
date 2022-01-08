@@ -5,7 +5,6 @@ import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import 'pantallas/pantallaJuego/juego.dart';
 
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Login(),
         '/espera': (context) => const PantallaJugadores(),
-        '/juego': (context) => const PantallaJuego(),
+        '/juego': (context) => PantallaJuego(),
       },
       //ffff
     );

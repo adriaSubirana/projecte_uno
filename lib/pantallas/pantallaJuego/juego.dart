@@ -13,14 +13,21 @@ import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
-  final _nombre = 'Eustaquio';
-  final _host = true;
-  final _id = "5k9aj8mcVC6X5FOldq8o";
+  late String _nombre; // = 'Eustaquio';
+  late bool _host; // = true;
+  late String _id; // = "5k9aj8mcVC6X5FOldq8o";
 
-  const PantallaJuego({Key? key}) : super(key: key);
+  PantallaJuego({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context) != null) {
+      final infoJugador =
+          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+      _nombre = infoJugador[0];
+      _id = infoJugador[1];
+      _host = infoJugador[2];
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
       appBar: AppBar(

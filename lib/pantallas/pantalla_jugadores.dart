@@ -185,7 +185,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                       color: Colors.red[900],
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PantallaJuego()));
+                            builder: (context) => PantallaJuego()));
                       },
                       splashColor: Colors.yellow,
                     )
