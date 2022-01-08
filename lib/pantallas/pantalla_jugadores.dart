@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
-import 'package:projecte_uno/pantallas/pantallaJuego/juego.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PantallaJugadores extends StatefulWidget {
@@ -200,6 +199,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                                   i: i,
                                   hostEspera: _infoJugador[2],
                                   idpartida: _infoJugador[1],
+                                  hostNombre: _infoJugador[0],
                                 ),
                             ],
                           ),
@@ -346,12 +346,14 @@ class JugadorEnJuego extends StatelessWidget {
     required this.i,
     required this.hostEspera,
     required this.idpartida,
+    required this.hostNombre,
   }) : super(key: key);
 
   final List<Jugador> jugadores;
   final int i;
   final bool hostEspera;
   final String idpartida;
+  final String hostNombre;
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +390,7 @@ class JugadorEnJuego extends StatelessWidget {
                   : null,
             ),
             color: Colors.green[700],
-            onPressed: hostEspera == true
+            onPressed: hostEspera == true && jugadores[i].nombre != hostNombre
                 ? () {
                     showDialog<bool>(
                         context: context,
