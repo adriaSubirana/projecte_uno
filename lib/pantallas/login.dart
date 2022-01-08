@@ -77,8 +77,8 @@ class _LoginState extends State<Login> {
       if (_qrCode != '-1') {
         _jugadorInfo[1] = qrCode;
         final j = Jugador(_controller.text);
-        final docSnap = FirebaseFirestore.instance
-            .collection('/Partidas/$qrCode/Jugadores');
+        final docSnap =
+            FirebaseFirestore.instance.collection('/Partidas').doc(qrCode);
         addJugador(docSnap.id, j);
         Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
       }
