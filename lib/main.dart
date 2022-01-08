@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      //home: PantallaGanador(),
+      //home: PantallaJuego(),
       initialRoute: '/',
       routes: {
         '/': (context) => const Login(),
         '/espera': (context) => const PantallaJugadores(),
-        '/juego': (context) => PantallaJuego(),
+        '/juego': (context) => const PantallaJuego(),
         '/ganador': (context) => PantallaGanador(),
       },
       //ffff

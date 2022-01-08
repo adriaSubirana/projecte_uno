@@ -160,7 +160,7 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                             Navigator.of(context).pop(true);
                           }
                         });
-                        //Navigator.of(context).pop();
+                        //merge conflict
                       },
                       splashColor: Colors.yellow,
                     ),
