@@ -141,7 +141,7 @@ class _LoginState extends State<Login> {
                             ? () {
                                 _crearPulsado();
                               }
-                            : null,
+                            : () {},
                         child: const Text(
                           "Crear",
                           style: TextStyle(
@@ -175,7 +175,7 @@ class _LoginState extends State<Login> {
                             ? () {
                                 _unirsePulsado();
                               }
-                            : null,
+                            : () {},
                         child: const Text(
                           "Unirse",
                           style: TextStyle(
