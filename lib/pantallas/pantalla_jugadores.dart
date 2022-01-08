@@ -77,19 +77,6 @@ class PantallaJugadores extends StatelessWidget {
             );
           }
 
-          /*if (partida.enCurso) {
-            Navigator.of(context)
-                .pushNamed('/juego', arguments: _infoJugador)
-                .then((value) {
-              if (value == true) {
-                Navigator.of(context)
-                    .pushNamed('/ganador', arguments: _infoJugador);
-              } else {
-                Navigator.pop(context);
-              }
-            });
-          }*/
-
           return StreamBuilder(
             stream: jugadorsSnapshots(_infoJugador[1]),
             builder: (
@@ -338,19 +325,15 @@ class PantallaJugadores extends StatelessWidget {
                               docPartida.update(partida.toFirestore());
                             }
                             if (partida.enCurso) {
-                              WidgetsBinding.instance
-                                  ?.addPostFrameCallback((_) {
-                                Navigator.of(context)
-                                    .pushNamed('/juego',
-                                        arguments: _infoJugador)
-                                    .then((value) {
-                                  if (value == true) {
-                                    Navigator.of(context).pushNamed('/ganador',
-                                        arguments: _infoJugador);
-                                  } else {
-                                    Navigator.pop(context);
-                                  }
-                                });
+                              Navigator.of(context)
+                                  .pushNamed('/juego', arguments: _infoJugador)
+                                  .then((value) {
+                                if (value == true) {
+                                  Navigator.of(context).pushNamed('/ganador',
+                                      arguments: _infoJugador);
+                                } else {
+                                  Navigator.pop(context);
+                                }
                               });
                             }
                           },
