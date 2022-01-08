@@ -11,6 +11,7 @@ class PantallaJugadores extends StatefulWidget {
   _PantallaJugadoresState createState() => _PantallaJugadoresState();
 }
 
+//Texto conflict
 class _PantallaJugadoresState extends State<PantallaJugadores> {
   late final List<dynamic> _infoJugador;
   late String idjugador;

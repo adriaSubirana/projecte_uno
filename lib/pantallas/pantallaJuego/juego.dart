@@ -19,6 +19,7 @@ class PantallaJuego extends StatelessWidget {
 
   PantallaJuego({Key? key}) : super(key: key);
 
+  //Texto para conflict
   @override
   Widget build(BuildContext context) {
     /*if (ModalRoute.of(context) != null) {

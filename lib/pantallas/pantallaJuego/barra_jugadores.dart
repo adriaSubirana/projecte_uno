@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 
+//Texto conflict
 class BarraJugadores extends StatelessWidget {
   final Iterable<Jugador> jugadores;
   final int turno;
