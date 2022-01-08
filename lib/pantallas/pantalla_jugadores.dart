@@ -6,15 +6,8 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class PantallaJugadores extends StatefulWidget {
-  const PantallaJugadores({Key? key}) : super(key: key);
-
-  @override
-  _PantallaJugadoresState createState() => _PantallaJugadoresState();
-}
-
 //Texto conflict
-class _PantallaJugadoresState extends State<PantallaJugadores> {
+class PantallaJugadores extends StatelessWidget {
   late final List<dynamic> _infoJugador;
   late String idjugador;
 
