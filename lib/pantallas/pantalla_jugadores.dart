@@ -43,6 +43,52 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                 (docSnap) => Jugador.fromFirestore(docSnap.id, docSnap.data()),
               )
               .toList();
+
+          bool e = false;
+          for (final j in jugadores) {
+            if (j.nombre == _infoJugador[0]) e = true;
+          }
+          if (!e) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      "Error",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Text(
+                        "El jugador \"${_infoJugador[0]}\" no existe o te han echado.\n\nVuelve a la pantalla inicial.",
+                        style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "Volver",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
           return Column(children: [
             Expanded(
               flex: 2,
@@ -275,11 +321,7 @@ class JugadorEnJuego extends StatelessWidget {
                               ),
                             ],
                           );
-                        }).then((value) {
-                      if (value != null && value) {
-                        Navigator.of(context).pop(true);
-                      }
-                    });
+                        });
                   }
                 : null,
             splashColor: Colors.red[900],
