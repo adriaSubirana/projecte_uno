@@ -137,9 +137,11 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          _crearPulsado();
-                        },
+                        onPressed: _controller.text != ""
+                            ? () {
+                                _crearPulsado();
+                              }
+                            : null,
                         child: const Text(
                           "Crear",
                           style: TextStyle(
@@ -169,9 +171,11 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          _unirsePulsado();
-                        },
+                        onPressed: _controller.text != ""
+                            ? () {
+                                _unirsePulsado();
+                              }
+                            : null,
                         child: const Text(
                           "Unirse",
                           style: TextStyle(
