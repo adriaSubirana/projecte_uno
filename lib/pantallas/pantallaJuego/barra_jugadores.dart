@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 
-class BarraJugador extends StatelessWidget {
+class BarraJugadores extends StatelessWidget {
   final Iterable<Jugador> jugadores;
   final int turno;
-  const BarraJugador({
+  const BarraJugadores({
     Key? key,
     required this.jugadores,
     required this.turno,

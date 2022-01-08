@@ -13,21 +13,21 @@ import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
-  late String _nombre; // = 'Eustaquio';
-  late bool _host; // = true;
-  late String _id; // = "5k9aj8mcVC6X5FOldq8o";
+  late String _nombre = 'Eustaquio';
+  late bool _host = true;
+  late String _id = "2WTVdNF7r9Uln6RDy4wT";
 
   PantallaJuego({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (ModalRoute.of(context) != null) {
+    /*if (ModalRoute.of(context) != null) {
       final infoJugador =
           ModalRoute.of(context)!.settings.arguments as List<dynamic>;
       _nombre = infoJugador[0];
       _id = infoJugador[1];
       _host = infoJugador[2];
-    }
+    }*/
     return Scaffold(
       backgroundColor: const Color(0xFF515151),
       appBar: AppBar(
@@ -46,10 +46,49 @@ class PantallaJuego extends StatelessWidget {
           final partida = doc.data();
           final docPartida =
               FirebaseFirestore.instance.collection("/Partidas").doc(_id);
-          if (partida == null) return const Text("Esta partida no existe");
+          if (partida == null) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      "Error",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Text(
+                        "La partida \"$_id\" no existe o se ha borrado.\n\nVuelve a la pantalla inicial.",
+                        style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                      child: const Text(
+                        "Volver",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
 
           // TODO: implementar enCurso
-          if (partida.enCurso) {
+          if (!partida.enCurso) {
             debugPrint("Alguien ha ganado");
           }
 
@@ -64,9 +103,11 @@ class PantallaJuego extends StatelessWidget {
             docPartida.update(partida.toFirestore());
           }
 
-          if (partida.cartasMesa.last[0] != 'k') {
-            partida.color = "";
-            docPartida.update(partida.toFirestore());
+          if (partida.cartasMesa.isNotEmpty) {
+            if (partida.cartasMesa.last[0] != 'k') {
+              partida.color = "";
+              docPartida.update(partida.toFirestore());
+            }
           }
 
           return StreamBuilder(
@@ -86,14 +127,90 @@ class PantallaJuego extends StatelessWidget {
                   )
                   .toList();
 
-              if (jugadores.isEmpty) return const Text("No hay jugadores");
-              // TODO: error si tu nombre no coincide
+              if (jugadores.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          "Error",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24),
+                          child: Text(
+                            "No hay jugadores.\n\nVuelve a la pantalla inicial.",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: const Text(
+                            "Volver",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              // Error si tu nombre no coincide
               bool e = false;
               for (final j in jugadores) {
                 if (j.nombre == _nombre) e = true;
               }
               if (!e) {
-                return const Text("No existes");
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          "Error",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24),
+                          child: Text(
+                            "El jugador \"$_nombre\" no existe.\n\nVuelve a la pantalla inicial.",
+                            style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: const Text(
+                            "Volver",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               }
 
               final yo = jugadores.where((j) => j.nombre == _nombre).first;
@@ -179,7 +296,7 @@ class PantallaJuego extends StatelessWidget {
                         ),
                       ],
                     ),
-                    BarraJugador(
+                    BarraJugadores(
                         jugadores: otros,
                         turno: partida.turno % jugadores.length),
                     Expanded(

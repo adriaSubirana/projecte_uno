@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
-import 'package:projecte_uno/pantallas/pantallaLogin/login.dart';
+import 'package:projecte_uno/pantallas/login.dart';
+import 'package:projecte_uno/pantallas/pantalla_ganador.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -29,13 +30,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      //home: PantallaJuego(),
-      initialRoute: '/',
+      home: PantallaGanador(),
+      /*initialRoute: '/',
       routes: {
         '/': (context) => const Login(),
         '/espera': (context) => const PantallaJugadores(),
         '/juego': (context) => PantallaJuego(),
-      },
+      },*/
       //ffff
     );
   }

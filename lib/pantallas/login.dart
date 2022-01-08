@@ -75,8 +75,9 @@ class _LoginState extends State<Login> {
         _qrCode = qrCode;
       });
 
-      if (_qrCode != '-1')
+      if (_qrCode != '-1') {
         Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
+      }
     } on PlatformException {
       _qrCode = "Fail";
     }
