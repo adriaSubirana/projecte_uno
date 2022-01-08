@@ -60,8 +60,8 @@ class _LoginState extends State<Login> {
   Future<void> _unirsePulsado() async {
     debugPrint(_controller.text + " no host");
     setState(() {
-      _jugadorInfo[0] = _controller.text;
       _jugadorInfo[2] = false;
+      _jugadorInfo[0] = _controller.text;
     });
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
@@ -72,6 +72,7 @@ class _LoginState extends State<Login> {
       );
       if (!mounted) return;
       setState(() {
+        _jugadorInfo[1] = _qrCode;
         final j = Jugador(_controller.text);
         final docSnap = FirebaseFirestore.instance
             .collection('/Partidas${_qrCode}/Jugadores');
