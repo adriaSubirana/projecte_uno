@@ -309,21 +309,23 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                             ),
                           ),
                           color: Colors.red[900],
-                          onPressed: () {
-                            partida.enCurso = true;
-                            docPartida.update(partida.toFirestore());
-                            for (int i = 0; i < jugadores.length; i++) {
-                              jugadores[i].orden = i;
-                              for (int j = 0; j < 7; j++) {
-                                jugadores[i].addCarta(partida.robar());
-                              }
-                              FirebaseFirestore.instance
-                                  .collection(
-                                      "/Partidas/${_infoJugador[1]}/Jugadores")
-                                  .doc(jugadores[i].id)
-                                  .update(jugadores[i].toFirestore());
-                            }
-                          },
+                          onPressed: _infoJugador[2] == true
+                              ? () {
+                                  partida.enCurso = true;
+                                  docPartida.update(partida.toFirestore());
+                                  for (int i = 0; i < jugadores.length; i++) {
+                                    jugadores[i].orden = i;
+                                    for (int j = 0; j < 7; j++) {
+                                      jugadores[i].addCarta(partida.robar());
+                                    }
+                                    FirebaseFirestore.instance
+                                        .collection(
+                                            "/Partidas/${_infoJugador[1]}/Jugadores")
+                                        .doc(jugadores[i].id)
+                                        .update(jugadores[i].toFirestore());
+                                  }
+                                }
+                              : null,
                           splashColor: Colors.yellow,
                         )
                       ],
