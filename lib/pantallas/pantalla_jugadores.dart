@@ -83,7 +83,18 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
             );
           }
 
-          if (!partida.enCurso) {}
+          if (partida.enCurso) {
+            Navigator.of(context)
+                .pushNamed('/juego', arguments: _infoJugador)
+                .then((value) {
+              if (value == true) {
+                Navigator.of(context)
+                    .pushNamed('/ganador', arguments: _infoJugador);
+              } else {
+                Navigator.pop(context);
+              }
+            });
+          }
 
           return StreamBuilder(
             stream: jugadorsSnapshots(_infoJugador[1]),
@@ -299,32 +310,20 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                           ),
                           color: Colors.red[900],
                           onPressed: () {
-                            for (final j in jugadores) {
-                              if (j.nombre == _infoJugador[0] &&
-                                  _infoJugador[2] == true) {
-                                // partida.enCurso = true;
-                                for (int i = 0; i < jugadores.length; i++) {
-                                  jugadores[i].orden = i;
-                                  for (int j = 0; j < 7; j++) {
-                                    //   jugadores[i].addCarta(partida.robar());
-                                  }
-                                }
+                            partida.enCurso = true;
+                            docPartida.update(partida.toFirestore());
+                            for (int i = 0; i < jugadores.length; i++) {
+                              jugadores[i].orden = i;
+                              for (int j = 0; j < 7; j++) {
+                                jugadores[i].addCarta(partida.robar());
                               }
+                              FirebaseFirestore.instance
+                                  .collection(
+                                      "/Partidas/${_infoJugador[1]}/Jugadores")
+                                  .doc(jugadores[i].id)
+                                  .update(jugadores[i].toFirestore());
                             }
-
-                            //if (partida.enCurso == true) {
-                            Navigator.of(context)
-                                .pushNamed('/juego', arguments: _infoJugador)
-                                .then((value) {
-                              if (value == true) {
-                                Navigator.of(context).pushNamed('/ganador',
-                                    arguments: _infoJugador);
-                              } else {
-                                Navigator.pop(context);
-                              }
-                            });
                           },
-                          // },
                           splashColor: Colors.yellow,
                         )
                       ],
