@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
@@ -324,6 +326,22 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                                         .update(jugadores[i].toFirestore());
                                   }
                                   partida.cartasMesa.add(partida.robar());
+                                  if (partida.cartasMesa.first[0] == 'k') {
+                                    switch (Random().nextInt(3)) {
+                                      case 0:
+                                        partida.color = 'r';
+                                        break;
+                                      case 1:
+                                        partida.color = 'b';
+                                        break;
+                                      case 2:
+                                        partida.color = 'y';
+                                        break;
+                                      case 3:
+                                        partida.color = 'g';
+                                        break;
+                                    }
+                                  }
                                   docPartida.update(partida.toFirestore());
                                 }
                               : null,
