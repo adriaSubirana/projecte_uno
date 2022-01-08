@@ -312,7 +312,6 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                           onPressed: _infoJugador[2] == true
                               ? () {
                                   partida.enCurso = true;
-                                  docPartida.update(partida.toFirestore());
                                   for (int i = 0; i < jugadores.length; i++) {
                                     jugadores[i].orden = i;
                                     for (int j = 0; j < 7; j++) {
@@ -324,6 +323,8 @@ class _PantallaJugadoresState extends State<PantallaJugadores> {
                                         .doc(jugadores[i].id)
                                         .update(jugadores[i].toFirestore());
                                   }
+                                  partida.cartasMesa.add(partida.robar());
+                                  docPartida.update(partida.toFirestore());
                                 }
                               : null,
                           splashColor: Colors.yellow,
