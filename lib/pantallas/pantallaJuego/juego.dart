@@ -256,6 +256,16 @@ class PantallaJuego extends StatelessWidget {
                     Stack(
                       children: [
                         Align(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 15, 0),
+                            child: Text(
+                              'Posicion: ${yo.orden + 1}',
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                          ),
+                          alignment: Alignment.topRight,
+                        ),
+                        Align(
                           child: Abandonar(
                             host: _host,
                             salir: () {
