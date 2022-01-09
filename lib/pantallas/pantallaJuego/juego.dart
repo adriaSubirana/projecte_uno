@@ -377,7 +377,13 @@ class PantallaJuego extends StatelessWidget {
                                 partida.cartasMesa.add(codigo);
                                 yo.cartas.remove(codigo);
 
-                                if (codigo[1] == '%') partida.cambioSentido();
+                                if (codigo[1] == '%') {
+                                  if (jugadores.length == 2) {
+                                    partida.turno =
+                                        partida.turno + partida.sentido;
+                                  }
+                                  partida.cambioSentido();
+                                }
                                 if (codigo[1] == '#') {
                                   partida.turno =
                                       partida.turno + partida.sentido;
