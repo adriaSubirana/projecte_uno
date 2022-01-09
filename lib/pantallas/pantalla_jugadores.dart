@@ -34,6 +34,11 @@ class PantallaJugadores extends StatelessWidget {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
+
+          const snackBar = SnackBar(
+            content: Text("La partida ha comenzado, entra para jugar"),
+          );
+
           final doc = snapshot.data!;
           var partida = doc.data();
           final docPartida = FirebaseFirestore.instance
@@ -282,12 +287,12 @@ class PantallaJugadores extends StatelessWidget {
                         MaterialButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 12, horizontal: 7),
                             child: Text(
-                              'Comenzar',
-                              style: TextStyle(
+                              _infoJugador[2] ? 'Comenzar' : 'Entrar',
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   shadows: [
@@ -350,6 +355,10 @@ class PantallaJugadores extends StatelessWidget {
                                       }
                                     },
                                   );
+                                  if (!_infoJugador[2]) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
                                 }
                               : null,
                           splashColor: Colors.yellow,
