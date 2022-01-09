@@ -81,6 +81,7 @@ class _LoginState extends State<Login> {
         },
       );
       if (_qrCode != '-1') {
+        // TODO: si partida esta en curso no te puedes unir
         _jugadorInfo[1] = qrCode;
         final j = Jugador(_controller.text);
         final docSnap =

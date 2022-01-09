@@ -6,11 +6,11 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+// ignore: must_be_immutable
 class PantallaJugadores extends StatelessWidget {
-  late final List<dynamic> _infoJugador;
-  late final String idjugador;
+  late List<dynamic> _infoJugador;
+  late String idjugador;
 
-  // ignore: prefer_const_constructors_in_immutables
   PantallaJugadores({Key? key}) : super(key: key);
 
   @override
@@ -300,6 +300,7 @@ class PantallaJugadores extends StatelessWidget {
                             ),
                           ),
                           color: Colors.red[900],
+                          // TODO: Solo puedes darle si eres host o si encurso esta a true
                           onPressed: () {
                             if (_infoJugador[2] == true) {
                               partida = Partida();
