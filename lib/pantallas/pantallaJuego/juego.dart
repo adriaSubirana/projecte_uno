@@ -417,11 +417,6 @@ class PantallaJuego extends StatelessWidget {
                                         .update(jugadores[partida.turno %
                                                 jugadores.length]
                                             .toFirestore());
-                                    const snackBar = SnackBar(
-                                      content: Text("Chupas 4 cartas"),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
                                   }
                                   // Show dialog para escoger color
                                   await showDialog<String>(
@@ -557,11 +552,6 @@ class PantallaJuego extends StatelessWidget {
                                         .update(jugadores[partida.turno %
                                                 jugadores.length]
                                             .toFirestore());
-                                    const snackBar = SnackBar(
-                                      content: Text("Chupas 2 cartas"),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
                                   }
                                 }
 
