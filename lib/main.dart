@@ -4,11 +4,16 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/login.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
+import 'package:flutter/services.dart';
 
 import 'pantallas/pantallaJuego/juego.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
