@@ -271,12 +271,12 @@ class PantallaJuego extends StatelessWidget {
                                 docPartida.update(partida.toFirestore());
                                 collectionJugadores.doc(yo.id).delete();
                               }
-                              Navigator.pop(context);
+                              Navigator.pop(context, true);
                             },
-                            then: () {
+                            then: (value) {
                               // Ai abandonas retorna false i tiene que volver hasta /login
                               // pero si se acaba la partida retorna true y vuelve a /espera
-                              Navigator.pop(context, false);
+                              if (value) Navigator.pop(context, false);
                             },
                           ),
                           alignment: Alignment.topLeft,
