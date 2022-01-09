@@ -341,7 +341,6 @@ class PantallaJuego extends StatelessWidget {
                                 Uno(j1: yo),
                                 const Spacer(),
                                 Robar(
-                                  partida: partida,
                                   onPressed: partida.turno % jugadores.length ==
                                           yo.orden
                                       ? () {

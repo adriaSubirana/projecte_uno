@@ -62,8 +62,10 @@ class Carta extends StatelessWidget {
                               child: Container(
                                 height: 320,
                                 width: 195,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
+                                decoration: BoxDecoration(
+                                  color: codigo[1] == ' ' || codigo[1] == 'r'
+                                      ? Colors.red
+                                      : Colors.white,
                                 ),
                                 child: Center(
                                   child: RotationTransition(
@@ -310,6 +312,30 @@ Widget cardSymbol(String s, Color c) {
             decoration: TextDecoration.underline),
       ),
     );
+  } else if (s[1] == 'r') {
+    if (size == 112) {
+      return const RotationTransition(
+        turns: AlwaysStoppedAnimation(-20 / 360),
+        child: Padding(
+          padding: EdgeInsets.only(left: 2),
+          child: Text(
+            'Robar',
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 72,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(-8, 6),
+                    blurRadius: 3,
+                  )
+                ],
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+    } else
+      return const Text(' ');
   } else {
     return Text(
       " ${s[1]} ",
