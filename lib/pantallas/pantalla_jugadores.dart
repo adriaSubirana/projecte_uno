@@ -419,7 +419,7 @@ class JugadorEnJuego extends StatelessWidget {
                         return AlertDialog(
                           backgroundColor: const Color(0xFF515151),
                           title: const Text(
-                            "Eliminar",
+                            "X",
                             style: TextStyle(color: Colors.white70),
                           ),
                           content: const Text(
