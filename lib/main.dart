@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/login.dart';
-import 'package:projecte_uno/pantallas/pantalla_ganador.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -30,13 +29,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      //home: PantallaGanador(),
       initialRoute: '/',
       routes: {
         '/': (context) => const Login(),
         '/espera': (context) => PantallaJugadores(),
         '/juego': (context) => PantallaJuego(),
-        '/ganador': (context) => PantallaGanador(),
       },
       //ffff
     );
