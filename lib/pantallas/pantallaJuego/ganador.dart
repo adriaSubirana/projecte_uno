@@ -21,7 +21,7 @@ class Ganador extends StatelessWidget {
                   : "FIN DE LA PARTIDA",
               style: const TextStyle(
                   color: Colors.white70,
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 75),
@@ -38,42 +38,48 @@ class Ganador extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 48, 30, 48),
-                child: Row(
-                  children: [
-                    Image.network(
-                      "https://webris.org/wp-content/uploads/2019/01/giphy.gif",
-                      height: 75,
-                      width: 75,
-                    ),
-                    Column(
-                      children: [
-                        Icon(Icons.person,
-                            color: Colors.white.withAlpha(200), size: 100),
-                        Text(
-                          ganador.nombre == infoJugador[0]
-                              ? "¡Has Ganado!"
-                              : "¡${ganador.nombre} ha ganado!",
-                          style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    //Transform(
-                    //transform: Matrix4.rotationY(3.1415),
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(3.1415),
-                      child: Image.network(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 48,
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.network(
                         "https://webris.org/wp-content/uploads/2019/01/giphy.gif",
                         height: 75,
                         width: 75,
                       ),
-                    ),
-                    //),
-                  ],
+                      Column(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: Colors.white.withAlpha(200),
+                            size: 100,
+                          ),
+                          Text(
+                            ganador.nombre == infoJugador[0]
+                                ? "¡Has Ganado!"
+                                : "¡${ganador.nombre} ha ganado!",
+                            style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                      Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationY(3.1415),
+                        child: Image.network(
+                          "https://webris.org/wp-content/uploads/2019/01/giphy.gif",
+                          height: 75,
+                          width: 75,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
