@@ -148,7 +148,14 @@ class _LoginState extends State<Login> {
                             ? () {
                                 _crearPulsado();
                               }
-                            : () {},
+                            : () {
+                                const snackBar = SnackBar(
+                                  content:
+                                      Text("Es necesario un nombre para jugar"),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
                         child: const Text(
                           "Crear",
                           style: TextStyle(
@@ -182,7 +189,14 @@ class _LoginState extends State<Login> {
                             ? () {
                                 _unirsePulsado();
                               }
-                            : () {},
+                            : () {
+                                const snackBar = SnackBar(
+                                  content:
+                                      Text("Es necesario un nombre para jugar"),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
                         child: const Text(
                           "Unirse",
                           style: TextStyle(
