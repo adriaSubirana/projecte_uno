@@ -21,15 +21,17 @@ class _UnoState extends State<Uno> {
   }
 
   void _unoPulsado() {
-    setState(() {
-      if (widget.j1.cartas.length == 1) {
-        widget.j1.uno = true;
-        _estado = widget.j1.uno;
-      } else {
-        widget.j1.uno = false;
-        _estado = widget.j1.uno;
-      }
-    });
+    setState(
+      () {
+        if (widget.j1.cartas.length == 1) {
+          widget.j1.uno = true;
+          _estado = widget.j1.uno;
+        } else {
+          widget.j1.uno = false;
+          _estado = widget.j1.uno;
+        }
+      },
+    );
   }
 
   @override
@@ -38,18 +40,22 @@ class _UnoState extends State<Uno> {
       padding: const EdgeInsets.all(12),
       child: GestureDetector(
         onLongPress: () {
-          setState(() {
-            if (_estado == true) {
-              _pulsado = true;
-            } else {
-              _pulsado = false;
-            }
-          });
+          setState(
+            () {
+              if (_estado == true) {
+                _pulsado = true;
+              } else {
+                _pulsado = false;
+              }
+            },
+          );
         },
         onLongPressUp: () {
-          setState(() {
-            _pulsado = false;
-          });
+          setState(
+            () {
+              _pulsado = false;
+            },
+          );
         },
         child: ElevatedButton(
           onPressed: () {

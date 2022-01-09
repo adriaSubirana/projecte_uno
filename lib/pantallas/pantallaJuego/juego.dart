@@ -484,26 +484,28 @@ class PantallaJuego extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                  ).then((value) {
-                                    if (value == null) {
-                                      switch (Random().nextInt(3)) {
-                                        case 0:
-                                          partida.color = 'r';
-                                          break;
-                                        case 1:
-                                          partida.color = 'b';
-                                          break;
-                                        case 2:
-                                          partida.color = 'y';
-                                          break;
-                                        case 3:
-                                          partida.color = 'g';
-                                          break;
+                                  ).then(
+                                    (value) {
+                                      if (value == null) {
+                                        switch (Random().nextInt(3)) {
+                                          case 0:
+                                            partida.color = 'r';
+                                            break;
+                                          case 1:
+                                            partida.color = 'b';
+                                            break;
+                                          case 2:
+                                            partida.color = 'y';
+                                            break;
+                                          case 3:
+                                            partida.color = 'g';
+                                            break;
+                                        }
+                                      } else {
+                                        partida.color = value;
                                       }
-                                    } else {
-                                      partida.color = value;
-                                    }
-                                  });
+                                    },
+                                  );
                                 } else {
                                   if (codigo[1] == '€') {
                                     // Si quedan 2 cartas o menos se renuevan

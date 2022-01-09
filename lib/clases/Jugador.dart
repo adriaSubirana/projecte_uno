@@ -35,27 +35,35 @@ class Jugador {
   }
 }
 
-Stream<QuerySnapshot<Map<String, dynamic>>> jugadorsSnapshots(String partidaId) {
+Stream<QuerySnapshot<Map<String, dynamic>>> jugadorsSnapshots(
+    String partidaId) {
   final db = FirebaseFirestore.instance;
-  return db.collection("/Partidas/$partidaId/Jugadores").orderBy('orden').snapshots();
+  return db
+      .collection("/Partidas/$partidaId/Jugadores")
+      .orderBy('orden')
+      .snapshots();
 }
 
 Future<void> addJugador(String idPartida, Jugador j) async {
   final db = FirebaseFirestore.instance;
-  final doc = await db.collection("/Partidas/$idPartida/Jugadores").add(j.toFirestore());
+  final doc = await db
+      .collection("/Partidas/$idPartida/Jugadores")
+      .add(j.toFirestore());
   j.id = doc.id;
 }
 
 Future<void> ultimaCarta(String idPartida, Jugador jtarget, Jugador jactual) {
   final db = FirebaseFirestore.instance;
-  return db.runTransaction((transaction) async {
-    final jugadorRef = db.doc("/Partidas/$idPartida/Jugadores/${jtarget.id}");
-    final docSnap = await transaction.get(jugadorRef);
-    final data = docSnap.data()!;
-    if (!(data['uno'] as bool)) {
-      transaction.update(jugadorRef, {'uno': true});
-      // Yo sé que he escrit el valor
-      // TODO: Mirar si el jugador és el mateix i fer multa o no.
-    }
-  });
+  return db.runTransaction(
+    (transaction) async {
+      final jugadorRef = db.doc("/Partidas/$idPartida/Jugadores/${jtarget.id}");
+      final docSnap = await transaction.get(jugadorRef);
+      final data = docSnap.data()!;
+      if (!(data['uno'] as bool)) {
+        transaction.update(jugadorRef, {'uno': true});
+        // Yo sé que he escrit el valor
+        // TODO: Mirar si el jugador és el mateix i fer multa o no.
+      }
+    },
+  );
 }

@@ -240,34 +240,37 @@ class PantallaJugadores extends StatelessWidget {
                           color: Colors.red.withAlpha(100),
                           onPressed: () {
                             showDialog<bool>(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color(0xFF515151),
-                                    title: const Text(
-                                      "Abandonar",
-                                      style: TextStyle(color: Colors.white70),
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor: const Color(0xFF515151),
+                                  title: const Text(
+                                    "Abandonar",
+                                    style: TextStyle(color: Colors.white70),
+                                  ),
+                                  content: const Text(
+                                      "Seguro que quieres abandonar la partida?"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: const Text("Cancelar"),
                                     ),
-                                    content: const Text(
-                                        "Seguro que quieres abandonar la partida?"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, false),
-                                        child: const Text("Cancelar"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, true),
-                                        child: const Text("Abandonar"),
-                                      ),
-                                    ],
-                                  );
-                                }).then((value) {
-                              if (value != null && value) {
-                                Navigator.of(context).pop(true);
-                              }
-                            });
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
+                                      child: const Text("Abandonar"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ).then(
+                              (value) {
+                                if (value != null && value) {
+                                  Navigator.of(context).pop(true);
+                                }
+                              },
+                            );
                             //merge conflict
                           },
                           splashColor: Colors.yellow,
@@ -330,14 +333,13 @@ class PantallaJugadores extends StatelessWidget {
                             if (partida.enCurso) {
                               Navigator.of(context)
                                   .pushNamed('/juego', arguments: _infoJugador)
-                                  .then((value) {
-                                if (value == true) {
-                                  Navigator.of(context).pushNamed('/ganador',
-                                      arguments: _infoJugador);
-                                } else {
-                                  Navigator.pop(context);
-                                }
-                              });
+                                  .then(
+                                (value) {
+                                  if (value == false) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              );
                             }
                           },
                           splashColor: Colors.yellow,
@@ -407,30 +409,31 @@ class JugadorEnJuego extends StatelessWidget {
             onPressed: hostEspera == true && jugadores[i].nombre != hostNombre
                 ? () {
                     showDialog<bool>(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text("Eliminar"),
-                            content: const Text(
-                                "Seguro que deseas eliminar al jugador ?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, false),
-                                child: const Text("Cancelar"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  FirebaseFirestore.instance
-                                      .doc(
-                                          "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
-                                      .delete();
-                                  Navigator.pop(context, true);
-                                },
-                                child: const Text("Eliminar jugador"),
-                              ),
-                            ],
-                          );
-                        });
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Eliminar"),
+                          content: const Text(
+                              "Seguro que deseas eliminar al jugador ?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text("Cancelar"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                FirebaseFirestore.instance
+                                    .doc(
+                                        "/Partidas/$idpartida/Jugadores/${jugadores[i].id}")
+                                    .delete();
+                                Navigator.pop(context, true);
+                              },
+                              child: const Text("Eliminar jugador"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
                 : null,
             splashColor: Colors.red[900],

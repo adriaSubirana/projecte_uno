@@ -40,29 +40,33 @@ class _LoginState extends State<Login> {
         .collection('/Partidas')
         .add(p.toFirestore());
     addJugador(docSnap.id, j);
-    setState(() {
-      _jugadorInfo[2] = true;
-      _jugadorInfo[0] = _controller.text;
-      _jugadorInfo[1] = docSnap.id;
-    });
-    Navigator.of(context)
-        .pushNamed('/espera', arguments: _jugadorInfo)
-        .then((value) {
-      if (value != null && value == true) {
-        FirebaseFirestore.instance
-            .collection('/Partidas')
-            .doc(_jugadorInfo[1])
-            .delete();
-      }
-    });
+    setState(
+      () {
+        _jugadorInfo[2] = true;
+        _jugadorInfo[0] = _controller.text;
+        _jugadorInfo[1] = docSnap.id;
+      },
+    );
+    Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo).then(
+      (value) {
+        if (value != null && value == true) {
+          FirebaseFirestore.instance
+              .collection('/Partidas')
+              .doc(_jugadorInfo[1])
+              .delete();
+        }
+      },
+    );
   }
 
   Future<void> _unirsePulsado() async {
     debugPrint(_controller.text + " no host");
-    setState(() {
-      _jugadorInfo[2] = false;
-      _jugadorInfo[0] = _controller.text;
-    });
+    setState(
+      () {
+        _jugadorInfo[2] = false;
+        _jugadorInfo[0] = _controller.text;
+      },
+    );
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -71,9 +75,11 @@ class _LoginState extends State<Login> {
         ScanMode.QR,
       );
       if (!mounted) return;
-      setState(() {
-        _qrCode = qrCode;
-      });
+      setState(
+        () {
+          _qrCode = qrCode;
+        },
+      );
       if (_qrCode != '-1') {
         _jugadorInfo[1] = qrCode;
         final j = Jugador(_controller.text);
