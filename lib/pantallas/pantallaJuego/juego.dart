@@ -540,15 +540,15 @@ class PantallaJuego extends StatelessWidget {
                                   }
                                 }
 
+                                partida.turno = partida.turno + partida.sentido;
+                                collectionJugadores
+                                    .doc(yo.id)
+                                    .update(yo.toFirestore());
                                 // Cuando te quedas sin cartas has ganado y la partida acaba
                                 if (yo.cartas.isEmpty) {
                                   partida.enCurso = false;
                                 }
-                                partida.turno = partida.turno + partida.sentido;
                                 docPartida.update(partida.toFirestore());
-                                collectionJugadores
-                                    .doc(yo.id)
-                                    .update(yo.toFirestore());
                               }
                             } else {
                               null;
