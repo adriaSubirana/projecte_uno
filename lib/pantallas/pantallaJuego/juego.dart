@@ -7,12 +7,14 @@ import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/carta.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mesa.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/cartas_mano.dart';
+import 'package:projecte_uno/pantallas/pantallaJuego/ganador.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/robar.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/uno.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
+  late List infoJugador;
   late String _nombre; // = 'Eustaquio';
   late bool _host; // = true;
   late String _id; // = "2WTVdNF7r9Uln6RDy4wT";
@@ -22,8 +24,7 @@ class PantallaJuego extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (ModalRoute.of(context) != null) {
-      final infoJugador =
-          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+      infoJugador = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
       _nombre = infoJugador[0];
       _id = infoJugador[1];
       _host = infoJugador[2];
@@ -85,12 +86,6 @@ class PantallaJuego extends StatelessWidget {
                 ),
               ),
             );
-          }
-
-          if (!partida.enCurso) {
-            //Devolviendo true pantalla jugadores tiene que abrir pantalla ganador
-            Navigator.pop(context, true);
-            debugPrint("Alguien ha ganado");
           }
 
           // Si només queda una carta en cartasRobar,
@@ -232,6 +227,11 @@ class PantallaJuego extends StatelessWidget {
                   i++;
                   collectionJugadores.doc(j.id).update(j.toFirestore());
                 }
+              }
+
+              if (!partida.enCurso) {
+                final ganador = jugadores.where((j) => j.cartas.isEmpty).first;
+                return Ganador(infoJugador: infoJugador, ganador: ganador);
               }
 
               return Container(
