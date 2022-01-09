@@ -298,6 +298,7 @@ class PantallaJugadores extends StatelessWidget {
                           ),
                           color: Colors.red[900],
                           onPressed: () {
+                            // TODO: hacer una partida nueva y subirla al firestore
                             if (_infoJugador[2] == true) {
                               partida.enCurso = true;
                               for (int i = 0; i < jugadores.length; i++) {
