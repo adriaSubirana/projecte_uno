@@ -17,7 +17,7 @@ class _AbandonarState extends State<Abandonar> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        showDialog(
+        showDialog<bool>(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -34,7 +34,7 @@ class _AbandonarState extends State<Abandonar> {
               ),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.pop(context, false),
                   child: const Text("Cancelar"),
                 ),
                 TextButton(
