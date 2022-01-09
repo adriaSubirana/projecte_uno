@@ -92,12 +92,19 @@ class ShowUser extends StatelessWidget {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25.5, 14, 0, 0),
+              child: Text(
+                "$ordenjugador",
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
           ],
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(4, 0, 4, 2),
           child: Text(
-            '$ordenjugador. $nombre',
+            nombre,
             style: TextStyle(
               color: Colors.white.withAlpha(200),
               fontSize: 11,
