@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 
+// TODO: poner orden en cara jugadores
 class BarraJugadores extends StatelessWidget {
   final Iterable<Jugador> jugadores;
   final int turno;

@@ -301,53 +301,54 @@ class PantallaJugadores extends StatelessWidget {
                           ),
                           color: Colors.red[900],
                           // TODO: Solo puedes darle si eres host o si encurso esta a true
-                          onPressed: () {
-                            if (_infoJugador[2] == true) {
-                              partida = Partida();
-                              partida!.enCurso = true;
-                              for (int i = 0; i < jugadores.length; i++) {
-                                jugadores[i].orden = i;
-                                jugadores[i].cartas.clear();
-                                for (int j = 0; j < 7; j++) {
-                                  jugadores[i].addCarta(partida!.robar());
-                                }
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        "/Partidas/${_infoJugador[1]}/Jugadores")
-                                    .doc(jugadores[i].id)
-                                    .update(jugadores[i].toFirestore());
-                              }
-                              partida!.cartasMesa.add(partida!.robar());
-                              if (partida!.cartasMesa.first[0] == 'k') {
-                                switch (Random().nextInt(3)) {
-                                  case 0:
-                                    partida!.color = 'r';
-                                    break;
-                                  case 1:
-                                    partida!.color = 'b';
-                                    break;
-                                  case 2:
-                                    partida!.color = 'y';
-                                    break;
-                                  case 3:
-                                    partida!.color = 'g';
-                                    break;
-                                }
-                              }
-                              docPartida.update(partida!.toFirestore());
-                            }
-                            if (partida!.enCurso) {
-                              Navigator.of(context)
-                                  .pushNamed('/juego', arguments: _infoJugador)
-                                  .then(
-                                (value) {
-                                  if (value == false) {
-                                    Navigator.pop(context);
+                          onPressed: _infoJugador[2] || partida!.enCurso
+                              ? () {
+                                  if (_infoJugador[2] == true) {
+                                    partida = Partida();
+                                    partida!.enCurso = true;
+                                    for (int i = 0; i < jugadores.length; i++) {
+                                      jugadores[i].orden = i;
+                                      jugadores[i].cartas.clear();
+                                      for (int j = 0; j < 7; j++) {
+                                        jugadores[i].addCarta(partida!.robar());
+                                      }
+                                      FirebaseFirestore.instance
+                                          .collection(
+                                              "/Partidas/${_infoJugador[1]}/Jugadores")
+                                          .doc(jugadores[i].id)
+                                          .update(jugadores[i].toFirestore());
+                                    }
+                                    partida!.cartasMesa.add(partida!.robar());
+                                    if (partida!.cartasMesa.first[0] == 'k') {
+                                      switch (Random().nextInt(3)) {
+                                        case 0:
+                                          partida!.color = 'r';
+                                          break;
+                                        case 1:
+                                          partida!.color = 'b';
+                                          break;
+                                        case 2:
+                                          partida!.color = 'y';
+                                          break;
+                                        case 3:
+                                          partida!.color = 'g';
+                                          break;
+                                      }
+                                    }
+                                    docPartida.update(partida!.toFirestore());
                                   }
-                                },
-                              );
-                            }
-                          },
+                                  Navigator.of(context)
+                                      .pushNamed('/juego',
+                                          arguments: _infoJugador)
+                                      .then(
+                                    (value) {
+                                      if (value == false) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                  );
+                                }
+                              : null,
                           splashColor: Colors.yellow,
                         )
                       ],
