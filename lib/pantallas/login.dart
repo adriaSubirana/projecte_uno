@@ -15,7 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late TextEditingController _controller;
   late List<dynamic> _jugadorInfo;
-  late var _qrCode;
+  late String _qrCode;
 
   @override
   void initState() {

@@ -6,10 +6,12 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-//Texto conflict
 class PantallaJugadores extends StatelessWidget {
   late final List<dynamic> _infoJugador;
-  late String idjugador;
+  late final String idjugador;
+
+  // ignore: prefer_const_constructors_in_immutables
+  PantallaJugadores({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class PantallaJugadores extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           final doc = snapshot.data!;
-          final partida = doc.data();
+          var partida = doc.data();
           final docPartida = FirebaseFirestore.instance
               .collection("/Partidas")
               .doc(_infoJugador[1]);
@@ -249,7 +251,9 @@ class PantallaJugadores extends StatelessWidget {
                                     style: TextStyle(color: Colors.white70),
                                   ),
                                   content: const Text(
-                                      "Seguro que quieres abandonar la partida?"),
+                                    "Seguro que quieres abandonar la partida?",
+                                    style: TextStyle(color: Colors.white70),
+                                  ),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
@@ -271,7 +275,6 @@ class PantallaJugadores extends StatelessWidget {
                                 }
                               },
                             );
-                            //merge conflict
                           },
                           splashColor: Colors.yellow,
                         ),
@@ -298,13 +301,14 @@ class PantallaJugadores extends StatelessWidget {
                           ),
                           color: Colors.red[900],
                           onPressed: () {
-                            // TODO: hacer una partida nueva y subirla al firestore
                             if (_infoJugador[2] == true) {
-                              partida.enCurso = true;
+                              partida = Partida();
+                              partida!.enCurso = true;
                               for (int i = 0; i < jugadores.length; i++) {
                                 jugadores[i].orden = i;
+                                jugadores[i].cartas.clear();
                                 for (int j = 0; j < 7; j++) {
-                                  jugadores[i].addCarta(partida.robar());
+                                  jugadores[i].addCarta(partida!.robar());
                                 }
                                 FirebaseFirestore.instance
                                     .collection(
@@ -312,26 +316,26 @@ class PantallaJugadores extends StatelessWidget {
                                     .doc(jugadores[i].id)
                                     .update(jugadores[i].toFirestore());
                               }
-                              partida.cartasMesa.add(partida.robar());
-                              if (partida.cartasMesa.first[0] == 'k') {
+                              partida!.cartasMesa.add(partida!.robar());
+                              if (partida!.cartasMesa.first[0] == 'k') {
                                 switch (Random().nextInt(3)) {
                                   case 0:
-                                    partida.color = 'r';
+                                    partida!.color = 'r';
                                     break;
                                   case 1:
-                                    partida.color = 'b';
+                                    partida!.color = 'b';
                                     break;
                                   case 2:
-                                    partida.color = 'y';
+                                    partida!.color = 'y';
                                     break;
                                   case 3:
-                                    partida.color = 'g';
+                                    partida!.color = 'g';
                                     break;
                                 }
                               }
-                              docPartida.update(partida.toFirestore());
+                              docPartida.update(partida!.toFirestore());
                             }
-                            if (partida.enCurso) {
+                            if (partida!.enCurso) {
                               Navigator.of(context)
                                   .pushNamed('/juego', arguments: _infoJugador)
                                   .then(
@@ -413,9 +417,15 @@ class JugadorEnJuego extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text("Eliminar"),
+                          backgroundColor: const Color(0xFF515151),
+                          title: const Text(
+                            "Eliminar",
+                            style: TextStyle(color: Colors.white70),
+                          ),
                           content: const Text(
-                              "Seguro que deseas eliminar al jugador ?"),
+                            "Seguro que deseas eliminar al jugador ?",
+                            style: TextStyle(color: Colors.white70),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context, false),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Abandonar extends StatefulWidget {
   final bool host;
   final void Function()? salir;
-  final then;
+  final dynamic then;
   const Abandonar(
       {Key? key, required this.host, required this.salir, required this.then})
       : super(key: key);
@@ -30,6 +30,7 @@ class _AbandonarState extends State<Abandonar> {
                 !widget.host
                     ? "Seguro que quieres abandonar la partida?"
                     : "Seguro que quieres abandonar la partida?\nLa partida se eliminará y el juego acabará para todos",
+                style: const TextStyle(color: Colors.white70),
               ),
               actions: [
                 TextButton(

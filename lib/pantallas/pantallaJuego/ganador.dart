@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 
 class Ganador extends StatelessWidget {
-  late var infoJugador;
-  late Jugador ganador;
-  Ganador({Key? key, required this.infoJugador, required this.ganador})
+  final List infoJugador;
+  final Jugador ganador;
+  const Ganador({Key? key, required this.infoJugador, required this.ganador})
       : super(key: key);
 
   @override

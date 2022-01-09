@@ -14,11 +14,12 @@ import 'package:projecte_uno/pantallas/pantallaJuego/barra_jugadores.dart';
 import 'package:projecte_uno/pantallas/pantallaJuego/boton_abandonar.dart';
 
 class PantallaJuego extends StatelessWidget {
-  late List infoJugador;
-  late String _nombre; // = 'Eustaquio';
-  late bool _host; // = true;
-  late String _id; // = "2WTVdNF7r9Uln6RDy4wT";
+  late final List infoJugador;
+  late final String _nombre; // = 'Eustaquio';
+  late final bool _host; // = true;
+  late final String _id; // = "2WTVdNF7r9Uln6RDy4wT";
 
+  // ignore: prefer_const_constructors_in_immutables
   PantallaJuego({Key? key}) : super(key: key);
 
   @override
