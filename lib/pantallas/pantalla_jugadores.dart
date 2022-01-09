@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:wakelock/wakelock.dart';
 
 // ignore: must_be_immutable
 class PantallaJugadores extends StatelessWidget {
@@ -337,11 +338,13 @@ class PantallaJugadores extends StatelessWidget {
                                     }
                                     docPartida.update(partida!.toFirestore());
                                   }
+                                  Wakelock.enable();
                                   Navigator.of(context)
                                       .pushNamed('/juego',
                                           arguments: _infoJugador)
                                       .then(
                                     (value) {
+                                      Wakelock.disable();
                                       if (value == false) {
                                         Navigator.pop(context);
                                       }

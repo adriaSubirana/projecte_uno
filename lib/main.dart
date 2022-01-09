@@ -4,7 +4,6 @@ import 'package:projecte_uno/clases/jugador.dart';
 import 'package:projecte_uno/clases/partida.dart';
 import 'package:projecte_uno/pantallas/login.dart';
 import 'package:projecte_uno/pantallas/pantalla_jugadores.dart';
-import 'package:wakelock/wakelock.dart';
 
 import 'pantallas/pantallaJuego/juego.dart';
 
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Wakelock.enable();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Uno',
