@@ -300,7 +300,7 @@ class PantallaJugadores extends StatelessWidget {
                             ),
                           ),
                           color: Colors.red[900],
-                          // TODO: Solo puedes darle si eres host o si encurso esta a true
+                          // Solo puedes darle si eres host o si encurso esta a true
                           onPressed: _infoJugador[2] || partida!.enCurso
                               ? () {
                                   if (_infoJugador[2] == true) {

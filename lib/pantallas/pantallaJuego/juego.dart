@@ -374,7 +374,6 @@ class PantallaJuego extends StatelessWidget {
                                 }
                                 if (codigo[0] == 'k') {
                                   if (codigo[1] == '€') {
-                                    // TODO: informe de que has robado
                                     // Si quedan 4 cartas o menos se renuevan
                                     if (partida.cartasRobar.length <= 4) {
                                       for (int i =
@@ -402,6 +401,11 @@ class PantallaJuego extends StatelessWidget {
                                         .update(jugadores[partida.turno %
                                                 jugadores.length]
                                             .toFirestore());
+                                    const snackBar = SnackBar(
+                                      content: Text("Chupas 4 cartas"),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   }
                                   // Show dialog para escoger color
                                   await showDialog<String>(
@@ -537,6 +541,11 @@ class PantallaJuego extends StatelessWidget {
                                         .update(jugadores[partida.turno %
                                                 jugadores.length]
                                             .toFirestore());
+                                    const snackBar = SnackBar(
+                                      content: Text("Chupas 2 cartas"),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   }
                                 }
 
