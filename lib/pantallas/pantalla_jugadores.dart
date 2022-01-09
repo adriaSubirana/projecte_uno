@@ -195,7 +195,7 @@ class PantallaJugadores extends StatelessWidget {
                     flex: 6,
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                        padding: const EdgeInsets.fromLTRB(35, 16, 35, 0),
                         child: Container(
                           child: Center(
                             child: QrImage(
@@ -214,7 +214,7 @@ class PantallaJugadores extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 4,
+                    flex: 3,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -390,27 +390,10 @@ class JugadorEnJuego extends StatelessWidget {
             jugadores[i].nombre.toUpperCase(),
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          MaterialButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 7),
-              child: Text(
-                'Eliminar ',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 3),
-                        blurRadius: 2,
-                      )
-                    ],
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            color: Colors.green[700],
+          IconButton(
+            icon: const Icon(Icons.close_rounded),
+            color: Colors.red,
+            iconSize: 26,
             onPressed: hostEspera == true && jugadores[i].nombre != hostNombre
                 ? () {
                     showDialog<bool>(
@@ -447,7 +430,6 @@ class JugadorEnJuego extends StatelessWidget {
                     );
                   }
                 : null,
-            splashColor: Colors.red[900],
           ),
         ],
       ),
