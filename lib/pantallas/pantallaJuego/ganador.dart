@@ -80,7 +80,7 @@ class Ganador extends StatelessWidget {
             const SizedBox(height: 75),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, false);
+                Navigator.pop(context, true);
               },
               child: const Padding(
                 padding: EdgeInsets.all(12),
