@@ -95,16 +95,19 @@ class _LoginState extends State<Login> {
                 content: Text("No te puedes unir"),
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else {
+              _jugadorInfo[1] = qrCode;
+              final j = Jugador(_controller.text);
+              final docSnap = FirebaseFirestore.instance
+                  .collection('/Partidas')
+                  .doc(qrCode);
+              addJugador(docSnap.id, j);
+              Navigator.of(context)
+                  .pushNamed('/espera', arguments: _jugadorInfo);
             }
             throw Exception('algo');
           },
         );
-        _jugadorInfo[1] = qrCode;
-        final j = Jugador(_controller.text);
-        final docSnap =
-            FirebaseFirestore.instance.collection('/Partidas').doc(qrCode);
-        addJugador(docSnap.id, j);
-        Navigator.of(context).pushNamed('/espera', arguments: _jugadorInfo);
       }
     } on PlatformException {
       _qrCode = "Fail";
