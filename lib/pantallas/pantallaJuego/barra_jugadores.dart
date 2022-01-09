@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_uno/clases/jugador.dart';
 
-// TODO: poner orden en cara jugadores
 class BarraJugadores extends StatelessWidget {
   final Iterable<Jugador> jugadores;
   final int turno;
@@ -23,7 +22,10 @@ class BarraJugadores extends StatelessWidget {
             Container(
               //width: 55,
               //height: 75,
-              child: ShowUser(numcartas: j.cartas.length, nombre: j.nombre),
+              child: ShowUser(
+                  numcartas: j.cartas.length,
+                  nombre: j.nombre,
+                  ordenjugador: j.orden + 1),
               decoration: j.orden == turno
                   ? BoxDecoration(
                       color: Colors.grey[800],
@@ -47,9 +49,12 @@ class BarraJugadores extends StatelessWidget {
 class ShowUser extends StatelessWidget {
   final int numcartas;
   final String nombre;
+  final int ordenjugador;
+
   const ShowUser({
     required this.numcartas,
     required this.nombre,
+    required this.ordenjugador,
     Key? key,
   }) : super(key: key);
 
@@ -92,7 +97,7 @@ class ShowUser extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(4, 0, 4, 2),
           child: Text(
-            nombre,
+            '$ordenjugador. $nombre',
             style: TextStyle(
               color: Colors.white.withAlpha(200),
               fontSize: 11,
