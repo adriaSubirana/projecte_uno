@@ -127,7 +127,7 @@ class _LoginState extends State<Login> {
                     controller: _controller,
                     textCapitalization: TextCapitalization.words,
                     style: const TextStyle(color: Colors.white),
-                    maxLength: 15,
+                    maxLength: 10,
                     decoration: const InputDecoration(
                       hintText: "Introduce tu nombre",
                       hintStyle: TextStyle(color: Colors.white60),

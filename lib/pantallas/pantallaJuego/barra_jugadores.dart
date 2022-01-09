@@ -13,15 +13,15 @@ class BarraJugadores extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           for (final j in jugadores)
             Container(
-              width: 55,
-              height: 75,
+              //width: 55,
+              //height: 75,
               child: ShowUser(numcartas: j.cartas.length, nombre: j.nombre),
               decoration: j.orden == turno
                   ? BoxDecoration(
@@ -59,7 +59,7 @@ class ShowUser extends StatelessWidget {
         Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 3, 3, 0),
+              padding: const EdgeInsets.fromLTRB(2, 4, 2, 0),
               child: Icon(Icons.person,
                   color: Colors.white.withAlpha(200), size: 55),
             ),
@@ -68,24 +68,36 @@ class ShowUser extends StatelessWidget {
               height: 55,
               alignment: Alignment.topRight,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 2, 2, 0),
+                padding: const EdgeInsets.fromLTRB(0, 4, 2, 0),
                 child: Container(
-                    width: 15,
-                    height: 15,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
-                    child: Center(
-                        child: Text("$numcartas",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12)))),
+                  width: 15,
+                  height: 15,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.red),
+                  child: Center(
+                    child: Text(
+                      "$numcartas",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-        Text(nombre,
-            style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11)),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 0, 4, 2),
+          child: Text(
+            nombre,
+            style: TextStyle(
+              color: Colors.white.withAlpha(200),
+              fontSize: 11,
+            ),
+          ),
+        ),
       ],
     );
   }
