@@ -82,23 +82,6 @@ class _LoginState extends State<Login> {
       );
       if (_qrCode != '-1') {
         // TODO: si partida esta en curso no te puedes unir
-        StreamBuilder(
-          stream: partidaSnapshots(qrCode),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<DocumentSnapshot<Partida>> snapshot,
-          ) {
-            final doc = snapshot.data!;
-            final partida = doc.data();
-            if (!partida!.enCurso) {
-              const snackBar = SnackBar(
-                content: Text("No te puedes unir"),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
-            throw Exception('algo');
-          },
-        );
         _jugadorInfo[1] = qrCode;
         final j = Jugador(_controller.text);
         final docSnap =
