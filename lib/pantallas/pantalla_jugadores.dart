@@ -36,7 +36,7 @@ class PantallaJugadores extends StatelessWidget {
           }
 
           const snackBar = SnackBar(
-            content: Text("La partida ha comenzado, entra para jugar"),
+            content: Text("La partida ha comenzado"),
           );
 
           final doc = snapshot.data!;
